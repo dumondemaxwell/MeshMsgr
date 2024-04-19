@@ -1,0 +1,158 @@
+{
+	"changeLanguagePage": {
+		"changeLanguageAppBarTitle": "Language",
+		"selectLanguage": "Select Language",
+		"englishString": "English",
+		"hindiString": "Hindi",
+		"arabicString": "Arabic",
+		"chineseString": "Chinese",
+		"turkishString": "Turkish",
+		"confirmString": "Change Language?",
+		"sureDialogueString": "Are you sure you want to change this language setting?",
+		"closeString": "Close",
+		"yesString": "Yes"
+	},
+
+	"createAccountPage": {
+		"enterYourMobileNumberString": "Enter your mobile number",
+		"sendYouSmsString": "JustChat will send an SMS message to verify your mobile number.",
+		"mobileNumberString": "Mobile Number"
+	},
+
+	"onboarding": {
+		"welcomeToMsgrString": "Welcome to JustChat",
+		"agreeAndContinueString": "Agree and continue"
+	},
+
+	"otpScreen": {
+		"pleaseWaitString": "Please Wait..",
+		"verifyDetailsString": "Verify details",
+		"enterOtpString": "Enter the OTP sent to your mobile number"
+	},
+
+	"privacyPolicy": {
+		"privacyPolicyString": "Privacy Policy"
+	},
+
+	"termsOfService": {
+		"termsOfServiceString": "Terms of Service"
+	},
+
+	"calls": {
+		"callsString": "Calls"
+	},
+
+	"chat": {
+		"chatString": "Chat",
+		"youShareAFileString": "You share a file",
+		"youShareAContactString": "You share a contact"
+	},
+
+	"messageScreen": {
+		"typeAMessage": "Type a Message"
+	},
+
+	"profile": {
+		"sharedMediaString": "Shared Media",
+		"viewAllString": "View all",
+		"phoneNumberString": "Phone Number",
+		"mobileString": "Mobile",
+		"blockString": "Block",
+		"reportContactString": "Report Contact",
+		"reportString": "Report"
+	},
+
+	"selectContact": {
+		"selectContactString": "Select contact",
+		"contactsString": "contacts",
+		"newGroupString": "New group",
+		"inviteFriendsString": "Invite friends"
+	},
+
+	"groupMessageScreen": {
+		"typeAMessageScreen": "Type a Message"
+	},
+
+	"groupProfile": {
+		"participantsString": "participants",
+		"adminString": "admin",
+		"reportString": "Report",
+		"reportGroupString": "Report group",
+		"exitGroupString": "Exit group",
+		"editString": "Edit"
+	},
+
+	"groups": {
+		"groupsString": "Groups"
+	},
+
+	"newGroupInfo": {
+		"groupInfoString": "Group info",
+		"addGroupName": "Add group name",
+		"addDescriptionString": "Add description",
+		"chooseOptionString": "Choose Option",
+		"cameraString": "Camera",
+		"chooseFromGalleryString": "Choose from Gallery"
+	},
+
+	"newGroup": {
+		"newGroupString": "New Group",
+		"addParticipantsString": "Add participants",
+		"atleast1ContactSelectedString": "At least 1 contact must be selected"
+	},
+
+	"account": {
+		"accountString": "Account",
+		"privacyString": "Privacy",
+		"deleteMyAccountString": "Delete my account"
+	},
+
+	"deleteAccountString": {
+		"sureDeleteAcoountString": "Are you sure want to delete your account?",
+		"cancelString": "Cancel",
+		"deleteString": "Delete",
+		"deleteMyAccountString": "Delete my account",
+		"deleteYourAccountWillString": "Delete your account will:",
+		"deleteYourAccountFromJustChatString": "Delete your account from JustChat",
+		"erraseMessageHistoryString": "Erase your message history",
+		"deleteYouFromGroupString": "Delete you from all of your JustChat groups"
+	},
+
+	"privacy": {
+		"privacyString": "Privacy",
+		"whoCanSeeMyPersonalInfoString": "Who can see my personal info",
+		"ifYouDontShareLastseenString": "If you don't share your Last Seen, you won't be able to see other people's Last Seen"
+	},
+
+	"more": {
+		"settingsString": "Settings",
+		"changeLanguageString": "Change Language",
+		"inviteFriendString": "Invite friend",
+		"accountString": "Account",
+		"privacyAndDeleteAccountString": "Privacy and delete account",
+		"notificationsString": "Notifications",
+		"messageAndGroupString": "Message and group"
+	},
+
+	"myProfile": {
+		"profileString": "Profile",
+		"nameString": "Name",
+		"thisIsNotYourUsernameString": "This is not your username or pin. This name will be visible to your JustChat contacts.",
+		"aboutString": "About",
+		"phoneString": "Phone",
+		"profilePhotoString": "Profile photo",
+		"removePhotoString": "Remove photo",
+		"galleryString": "Gallery",
+		"cameraString": "Camera",
+		"enterYourNameString": "Enter your name",
+		"cancelString": "Cancel",
+		"saveString": "Save"
+	},
+
+	"bottomBar": {
+		"chatString": "Chat",
+		"callsString": "Calls",
+		"groupsString": "Groups",
+		"moreString": "More"
+	}
+}

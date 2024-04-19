@@ -1,0 +1,158 @@
+{
+	"changeLanguagePage": {
+		"changeLanguageAppBarTitle": "لغة",
+		"selectLanguage": "اختار اللغة",
+		"englishString": "الإنجليزية",
+		"hindiString": "الهندية",
+		"arabicString": "عربى",
+		"chineseString": "صينى",
+		"turkishString": "اللغة التركية",
+		"confirmString": "تغيير اللغة؟",
+		"sureDialogueString": "هل أنت متأكد أنك تريد تغيير إعداد اللغة هذا؟",
+		"closeString": "قريب",
+		"yesString": "نعم"
+	},
+
+	"createAccountPage": {
+		"enterYourMobileNumberString": "أدخل رقم هاتفك المحمول",
+		"sendYouSmsString": "سيقوم JustChat بإرسال رسالة SMS للتحقق من رقم هاتفك المحمول.",
+		"mobileNumberString": "رقم الهاتف المحمول"
+	},
+
+	"onboarding": {
+		"welcomeToJustChatString": "مرحبًا بك في JustChat",
+		"agreeAndContinueString": "Agree and continue"
+	},
+
+	"otpScreen": {
+		"pleaseWaitString": "أرجو الإنتظار..",
+		"verifyDetailsString": "تحقق من التفاصيل",
+		"enterOtpString": "أدخل OTP المرسل إلى رقم هاتفك المحمول"
+	},
+
+	"privacyPolicy": {
+		"privacyPolicyString": "سياسة الخصوصية"
+	},
+
+	"termsOfService": {
+		"termsOfServiceString": "شروط الخدمة"
+	},
+
+	"calls": {
+		"callsString": "المكالمات"
+	},
+
+	"chat": {
+		"chatString": "دردشة",
+		"youShareAFileString": "You share a file",
+		"youShareAContactString": "You share a contact"
+	},
+
+	"messageScreen": {
+		"typeAMessage": "اكتب رسالة"
+	},
+
+	"profile": {
+		"sharedMediaString": "الوسائط المشتركة",
+		"viewAllString": "مشاهدة الكل",
+		"phoneNumberString": "رقم الهاتف",
+		"mobileString": "التليفون المحمول",
+		"blockString": "منع",
+		"reportContactString": "إبلاغ عن جهة اتصال",
+		"reportString": "نقل"
+	},
+
+	"selectContact": {
+		"selectContactString": "حدد جهة اتصال",
+		"contactsString": "جهات الاتصال",
+		"newGroupString": "مجموعة جديدة",
+		"inviteFriendsString": "ادعو أصدقاء"
+	},
+
+	"groupMessageScreen": {
+		"typeAMessageScreen": "اكتب رسالة"
+	},
+
+	"groupProfile": {
+		"participantsString": "المشاركين",
+		"adminString": "مشرف",
+		"reportString": "نقل",
+		"reportGroupString": "تقرير المجموعة",
+		"exitGroupString": "مجموعة الخروج",
+		"editString": "تعديل"
+	},
+
+	"groups": {
+		"groupsString": "مجموعات"
+	},
+
+	"newGroupInfo": {
+		"groupInfoString": "معلومات المجموعة",
+		"addGroupName": "أضف اسم المجموعة",
+		"addDescriptionString": "اضف وصفا",
+		"chooseOptionString": "إختر خيارا",
+		"cameraString": "الة تصوير",
+		"chooseFromGalleryString": "اختر من المعرض"
+	},
+
+	"newGroup": {
+		"newGroupString": "مجموعة جديدة",
+		"addParticipantsString": "أضف مشاركين",
+		"atleast1ContactSelectedString": "يجب تحديد جهة اتصال واحدة على الأقل"
+	},
+
+	"account": {
+		"accountString": "الحساب",
+		"privacyString": "خصوصية",
+		"deleteMyAccountString": "احذف حسابي"
+	},
+
+	"deleteAccountString": {
+		"sureDeleteAcoountString": "هل أنت متأكد أنك تريد حذف حسابك؟",
+		"cancelString": "إلغاء",
+		"deleteString": "حذف",
+		"deleteMyAccountString": "احذف حسابي",
+		"deleteYourAccountWillString": "حذف حسابك سوف:",
+		"deleteYourAccountFromJustChatString": "احذف حسابك من JustChat",
+		"erraseMessageHistoryString": "محو سجل رسائلك",
+		"deleteYouFromGroupString": "حذفك من جميع مجموعات JustChat الخاصة بك"
+	},
+
+	"privacy": {
+		"privacyString": "خصوصية",
+		"whoCanSeeMyPersonalInfoString": "من يمكنه رؤية معلوماتي الشخصية",
+		"ifYouDontShareLastseenString": "إذا لم تشارك آخر ظهور لك ، فلن تتمكن من رؤية آخر ظهور لأشخاص آخرين."
+	},
+
+	"more": {
+		"settingsString": "إعدادات",
+		"changeLanguageString": "تغيير اللغة",
+		"inviteFriendString": "ادعُ صديقًا",
+		"accountString": "الحساب",
+		"privacyAndDeleteAccountString": "الخصوصية وحذف الحساب",
+		"notificationsString": "إشعارات",
+		"messageAndGroupString": "الرسالة والمجموعة"
+	},
+
+	"myProfile": {
+		"profileString": "الملف الشخصي",
+		"nameString": "اسم",
+		"thisIsNotYourUsernameString": "هذا ليس اسم المستخدم أو رقم التعريف الشخصي الخاص بك. سيكون هذا الاسم مرئيًا لجهات اتصال JustChat الخاصة بك.",
+		"aboutString": "حول",
+		"phoneString": "هاتف",
+		"profilePhotoString": "صورة الملف الشخصي",
+		"removePhotoString": "إزالة الصورة",
+		"galleryString": "صالة عرض",
+		"cameraString": "الة تصوير",
+		"enterYourNameString": "أدخل أسمك",
+		"cancelString": "إلغاء",
+		"saveString": "حفظ"
+	},
+
+	"bottomBar": {
+		"chatString": "دردشة",
+		"callsString": "المكالمات",
+		"groupsString": "مجموعات",
+		"moreString": "أكثر"
+	}
+}

@@ -1,0 +1,158 @@
+{
+	"changeLanguagePage": {
+		"changeLanguageAppBarTitle": "Dil",
+		"selectLanguage": "Dil Seçin",
+		"englishString": "ingilizce",
+		"hindiString": "Hintçe",
+		"arabicString": "Arapça",
+		"chineseString": "Çince",
+		"turkishString": "Türk",
+		"confirmString": "Dili değiştir?",
+		"sureDialogueString": "Bu dil ayarını değiştirmek istediğinizden emin misiniz?",
+		"closeString": "Kapat",
+		"yesString": "Evet"
+	},
+
+	"createAccountPage": {
+		"enterYourMobileNumberString": "telefon numaranızı girin",
+		"sendYouSmsString": "JustChat, cep telefonu numaranızı doğrulamak için bir SMS mesajı gönderecektir.",
+		"mobileNumberString": "Cep numarası"
+	},
+
+	"onboarding": {
+		"welcomeToJustChatString": "JustChat'e hoş geldiniz",
+		"agreeAndContinueString": "Agree and continue"
+	},
+
+	"otpScreen": {
+		"pleaseWaitString": "Lütfen bekle..",
+		"verifyDetailsString": "Ayrıntıları doğrulayın",
+		"enterOtpString": "Cep telefonu numaranıza gönderilen OTP'yi girin"
+	},
+
+	"privacyPolicy": {
+		"privacyPolicyString": "Gizlilik Politikası"
+	},
+
+	"termsOfService": {
+		"termsOfServiceString": "Kullanım Şartları"
+	},
+
+	"calls": {
+		"callsString": "Aramalar"
+	},
+
+	"chat": {
+		"chatString": "Sohbet",
+		"youShareAFileString": "You share a file",
+		"youShareAContactString": "You share a contact"
+	},
+
+	"messageScreen": {
+		"typeAMessage": "Mesaj yazın"
+	},
+
+	"profile": {
+		"sharedMediaString": "Paylaşılan Medya",
+		"viewAllString": "Hepsini gör",
+		"phoneNumberString": "Telefon numarası",
+		"mobileString": "Cep Telefonu",
+		"blockString": "Blok",
+		"reportContactString": "İletişim Bildir",
+		"reportString": "Bildiri"
+	},
+
+	"selectContact": {
+		"selectContactString": "Kişi seçin",
+		"contactsString": "kişiler",
+		"newGroupString": "Yeni Grup",
+		"inviteFriendsString": "Arkadaşları davet etmek"
+	},
+
+	"groupMessageScreen": {
+		"typeAMessageScreen": "Mesaj yazın"
+	},
+
+	"groupProfile": {
+		"participantsString": "katılımcılar",
+		"adminString": "yönetici",
+		"reportString": "Bildiri",
+		"reportGroupString": "Grubu bildir",
+		"exitGroupString": "Gruptan çık",
+		"editString": "Düzenle"
+	},
+
+	"groups": {
+		"groupsString": "Gruplar"
+	},
+
+	"newGroupInfo": {
+		"groupInfoString": "Grup bilgisi",
+		"addGroupName": "Grup adı ekleyin",
+		"addDescriptionString": "Açıklama ekleyin",
+		"chooseOptionString": "Seçeneği Seçin",
+		"cameraString": "Kamera",
+		"chooseFromGalleryString": "Galeriden Seç"
+	},
+
+	"newGroup": {
+		"newGroupString": "Yeni Grup",
+		"addParticipantsString": "Katılımcı ekleyin",
+		"atleast1ContactSelectedString": "En az 1 kişi seçilmelidir"
+	},
+
+	"account": {
+		"accountString": "Hesap",
+		"privacyString": "Gizlilik",
+		"deleteMyAccountString": "Hesabımı sil"
+	},
+
+	"deleteAccountString": {
+		"sureDeleteAcoountString": "Hesabınızı silmek istediğinizden emin misiniz?",
+		"cancelString": "İptal etmek",
+		"deleteString": "Sil",
+		"deleteMyAccountString": "Hesabımı sil",
+		"deleteYourAccountWillString": "Hesabınızı silip:",
+		"deleteYourAccountFromJustChatString": "Hesabınızı JustChat'ten silin",
+		"erraseMessageHistoryString": "Mesaj geçmişinizi silin",
+		"deleteYouFromGroupString": "Sizi tüm JustChat gruplarınızdan silmek"
+	},
+
+	"privacy": {
+		"privacyString": "Gizlilik",
+		"whoCanSeeMyPersonalInfoString": "Kişisel bilgilerimi kimler görebilir",
+		"ifYouDontShareLastseenString": "Son Görüldüğünüzü paylaşmazsanız, diğer kişilerin Son Görülenler'i göremezsiniz"
+	},
+
+	"more": {
+		"settingsString": "Ayarlar",
+		"changeLanguageString": "Dili değiştir",
+		"inviteFriendString": "Arkadaş davet etmek",
+		"accountString": "Hesap",
+		"privacyAndDeleteAccountString": "Gizlilik ve hesabı silme",
+		"notificationsString": "Bildirimler",
+		"messageAndGroupString": "Mesaj ve grup"
+	},
+
+	"myProfile": {
+		"profileString": "Profil",
+		"nameString": "İsim",
+		"thisIsNotYourUsernameString": "Bu sizin kullanıcı adınız veya şifreniz değil. Bu ad, JustChat kişileriniz tarafından görülecektir.",
+		"aboutString": "hakkında",
+		"phoneString": "Telefon",
+		"profilePhotoString": "Profil resmi",
+		"removePhotoString": "Fotoğrafı kaldır",
+		"galleryString": "Fotoğraf Galerisi",
+		"cameraString": "Kamera",
+		"enterYourNameString": "Adınızı giriniz",
+		"cancelString": "İptal etmek",
+		"saveString": "Kayıt etmek"
+	},
+
+	"bottomBar": {
+		"chatString": "Sohbet",
+		"callsString": "Aramalar",
+		"groupsString": "Gruplar",
+		"moreString": "Daha"
+	}
+}

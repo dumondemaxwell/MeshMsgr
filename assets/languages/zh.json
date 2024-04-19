@@ -1,0 +1,158 @@
+{
+	"changeLanguagePage": {
+		"changeLanguageAppBarTitle": "语言",
+		"selectLanguage": "选择语言",
+		"englishString": "英语",
+		"hindiString": "印地语",
+		"arabicString": "阿拉伯",
+		"chineseString": "中文",
+		"turkishString": "土耳其",
+		"confirmString": "改变语言？",
+		"sureDialogueString": "您确定要更改此语言设置吗？",
+		"closeString": "关",
+		"yesString": "是"
+	},
+
+	"createAccountPage": {
+		"enterYourMobileNumberString": "输入你的手机号码",
+		"sendYouSmsString": "JustChat将发送一条SMS消息以验证您的手机号码。",
+		"mobileNumberString": "手机号码"
+	},
+
+	"onboarding": {
+		"welcomeToJustChatString": "欢迎来到JustChat",
+		"agreeAndContinueString": "Agree and continue"
+	},
+
+	"otpScreen": {
+		"pleaseWaitString": "请耐心等待..",
+		"verifyDetailsString": "验证详细信息",
+		"enterOtpString": "输入发送到您手机号码的OTP"
+	},
+
+	"privacyPolicy": {
+		"privacyPolicyString": "隐私政策"
+	},
+
+	"termsOfService": {
+		"termsOfServiceString": "服务条款"
+	},
+
+	"calls": {
+		"callsString": "来电"
+	},
+
+	"chat": {
+		"chatString": "聊天室",
+		"youShareAFileString": "You share a file",
+		"youShareAContactString": "You share a contact"
+	},
+
+	"messageScreen": {
+		"typeAMessage": "输入讯息"
+	},
+
+	"profile": {
+		"sharedMediaString": "共享媒体",
+		"viewAllString": "查看全部",
+		"phoneNumberString": "电话号码",
+		"mobileString": "移动",
+		"blockString": "块",
+		"reportContactString": "报告联络人",
+		"reportString": "报告"
+	},
+
+	"selectContact": {
+		"selectContactString": "选择联系人",
+		"contactsString": "联络人",
+		"newGroupString": "新组",
+		"inviteFriendsString": "邀请朋友"
+	},
+
+	"groupMessageScreen": {
+		"typeAMessageScreen": "输入讯息"
+	},
+
+	"groupProfile": {
+		"participantsString": "参加者",
+		"adminString": "管理员",
+		"reportString": "报告",
+		"reportGroupString": "报告团",
+		"exitGroupString": "退出组",
+		"editString": "编辑"
+	},
+
+	"groups": {
+		"groupsString": "团体"
+	},
+
+	"newGroupInfo": {
+		"groupInfoString": "组信息",
+		"addGroupName": "添加组名",
+		"addDescriptionString": "添加描述",
+		"chooseOptionString": "选择选项",
+		"cameraString": "相机",
+		"chooseFromGalleryString": "从图库中选择"
+	},
+
+	"newGroup": {
+		"newGroupString": "新组",
+		"addParticipantsString": "添加参与者",
+		"atleast1ContactSelectedString": "必须至少选择1个联系人"
+	},
+
+	"account": {
+		"accountString": "帐户",
+		"privacyString": "隐私",
+		"deleteMyAccountString": "删除我的账户"
+	},
+
+	"deleteAccountString": {
+		"sureDeleteAcoountString": "您确定要删除您的帐户吗？",
+		"cancelString": "取消",
+		"deleteString": "删除",
+		"deleteMyAccountString": "删除我的账户",
+		"deleteYourAccountWillString": "删除您的帐户将：",
+		"deleteYourAccountFromJustChatString": "从JustChat删除您的帐户",
+		"erraseMessageHistoryString": "清除您的留言记录",
+		"deleteYouFromGroupString": "从所有JustChat组中删除您"
+	},
+
+	"privacy": {
+		"privacyString": "隐私",
+		"whoCanSeeMyPersonalInfoString": "谁可以看到我的个人信息",
+		"ifYouDontShareLastseenString": "如果您不共享您的“ Last Seen”，那么您将无法看到其他人的“ Last Seen”。"
+	},
+
+	"more": {
+		"settingsString": "设定值",
+		"changeLanguageString": "改变语言",
+		"inviteFriendString": "邀请朋友",
+		"accountString": "帐户",
+		"privacyAndDeleteAccountString": "隐私和删除帐户",
+		"notificationsString": "通知事项",
+		"messageAndGroupString": "讯息和群组"
+	},
+
+	"myProfile": {
+		"profileString": "个人资料",
+		"nameString": "名称",
+		"thisIsNotYourUsernameString": "这不是您的用户名或密码。 您的JustChat联系人可以看到该名称。",
+		"aboutString": "关于",
+		"phoneString": "电话",
+		"profilePhotoString": "头像照片",
+		"removePhotoString": "删除照片",
+		"galleryString": "画廊",
+		"cameraString": "相机",
+		"enterYourNameString": "输入你的名字",
+		"cancelString": "取消",
+		"saveString": "保存"
+	},
+
+	"bottomBar": {
+		"chatString": "聊天室",
+		"callsString": "来电",
+		"groupsString": "团体",
+		"moreString": "更多"
+	}
+}

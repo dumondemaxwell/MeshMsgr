@@ -1,0 +1,158 @@
+{
+	"changeLanguagePage": {
+		"changeLanguageAppBarTitle": "भाषा",
+		"selectLanguage": "भाषा का चयन करें",
+		"englishString": "अंग्रेज़ी",
+		"hindiString": "हिन्दी",
+		"arabicString": "अरबी",
+		"chineseString": "चीनी",
+		"turkishString": "तुर्की",
+		"confirmString": "भाषा बदलना चाहते है?",
+		"sureDialogueString": "क्या आप वाकई इस भाषा सेटिंग को बदलना चाहते हैं?",
+		"closeString": "बंद करे",
+		"yesString": "हाँ"
+	},
+
+	"createAccountPage": {
+		"enterYourMobileNumberString": "अपना मोबाइल नंबर दर्ज करें",
+		"sendYouSmsString": "JustChat आपके मोबाइल नंबर को सत्यापित करने के लिए एक एसएमएस संदेश भेजेगा।",
+		"mobileNumberString": "मोबाइल नंबर"
+	},
+
+	"onboarding": {
+		"welcomeToJustChatString": "JustChat में आपका स्वागत है",
+		"agreeAndContinueString": "Agree and continue"
+	},
+
+	"otpScreen": {
+		"pleaseWaitString": "कृपया प्रतीक्षा करें..",
+		"verifyDetailsString": "विवरण सत्यापित करें",
+		"enterOtpString": "अपने मोबाइल नंबर पर भेजे गए ओटीपी को दर्ज करें"
+	},
+
+	"privacyPolicy": {
+		"privacyPolicyString": "गोपनीयता नीति"
+	},
+
+	"termsOfService": {
+		"termsOfServiceString": "सेवा की शर्तें"
+	},
+
+	"calls": {
+		"callsString": "कॉल"
+	},
+
+	"chat": {
+		"chatString": "चैट",
+		"youShareAFileString": "You share a file",
+		"youShareAContactString": "You share a contact"
+	},
+
+	"messageScreen": {
+		"typeAMessage": "एक संदेश लिखें"
+	},
+
+	"profile": {
+		"sharedMediaString": "साझा मीडिया",
+		"viewAllString": "सभी देखें",
+		"phoneNumberString": "फ़ोन नंबर",
+		"mobileString": "मोबाइल",
+		"blockString": "ब्लॉक",
+		"reportContactString": "संपर्क रिपोर्ट",
+		"reportString": "रिपोर्ट"
+	},
+
+	"selectContact": {
+		"selectContactString": "संपर्क चुनें",
+		"contactsString": "संपर्क",
+		"newGroupString": "नया समूह",
+		"inviteFriendsString": "मित्रों को आमंत्रित करें"
+	},
+
+	"groupMessageScreen": {
+		"typeAMessageScreen": "एक संदेश लिखें"
+	},
+
+	"groupProfile": {
+		"participantsString": "प्रतिभागियों",
+		"adminString": "व्यवस्थापक",
+		"reportString": "रिपोर्ट",
+		"reportGroupString": "रिपोर्ट ग्रुप",
+		"exitGroupString": "समूह से बाहर निकलें",
+		"editString": "संपादित करें"
+	},
+
+	"groups": {
+		"groupsString": "समूहों"
+	},
+
+	"newGroupInfo": {
+		"groupInfoString": "समूह की जानकारी",
+		"addGroupName": "समूह नाम जोड़ें",
+		"addDescriptionString": "विवरण जोड़ें",
+		"chooseOptionString": "विकल्प चुनें",
+		"cameraString": "कैमरा",
+		"chooseFromGalleryString": "गैलरी से चयन करो"
+	},
+
+	"newGroup": {
+		"newGroupString": "नया समूह",
+		"addParticipantsString": "प्रतिभागियों को जोड़ें",
+		"atleast1ContactSelectedString": "कम से कम 1 संपर्क का चयन करना होगा"
+	},
+
+	"account": {
+		"accountString": "खाता",
+		"privacyString": "गुप्तता",
+		"deleteMyAccountString": "मेरा एकाउंट हटा दो"
+	},
+
+	"deleteAccountString": {
+		"sureDeleteAcoountString": "क्या आप वाकई अपना खाता हटाना चाहते हैं?",
+		"cancelString": "रद्द करें",
+		"deleteString": "हटाएं",
+		"deleteMyAccountString": "मेरा एकाउंट हटा दो",
+		"deleteYourAccountWillString": "अपना खाता हटाएं:",
+		"deleteYourAccountFromJustChatString": "JustChat से अपना खाता हटाएं",
+		"erraseMessageHistoryString": "अपना संदेश इतिहास मिटाएँ",
+		"deleteYouFromGroupString": "आप अपने सभी JustChat समूहों से हटाएं"
+	},
+
+	"privacy": {
+		"privacyString": "गुप्तता",
+		"whoCanSeeMyPersonalInfoString": "मेरी व्यक्तिगत जानकारी कौन देख सकता है",
+		"ifYouDontShareLastseenString": "यदि आप अपना लास्ट सीन शेयर नहीं करते हैं, तो आप दूसरे लोगों के लास्ट सीन को नहीं देख पाएंगे।"
+	},
+
+	"more": {
+		"settingsString": "समायोजन",
+		"changeLanguageString": "भाषा बदलो",
+		"inviteFriendString": "मित्रो को आमंत्रित करे",
+		"accountString": "खाता",
+		"privacyAndDeleteAccountString": "गोपनीयता और खाता हटाएं",
+		"notificationsString": "सूचनाएं",
+		"messageAndGroupString": "संदेश और समूह"
+	},
+
+	"myProfile": {
+		"profileString": "प्रोफ़ाइल",
+		"nameString": "नाम",
+		"thisIsNotYourUsernameString": "यह आपका उपयोगकर्ता नाम या पिन नहीं है। यह नाम आपके जस्टचैट संपर्कों को दिखाई देगा।",
+		"aboutString": "बारे में",
+		"phoneString": "फ़ोन",
+		"profilePhotoString": "प्रोफाइल फोटो",
+		"removePhotoString": "फोटो निकालें",
+		"galleryString": "गेलरी",
+		"cameraString": "कैमरा",
+		"enterYourNameString": "अपना नाम दर्ज करें",
+		"cancelString": "रद्द करें",
+		"saveString": "सहेजें"
+	},
+
+	"bottomBar": {
+		"chatString": "चैट",
+		"callsString": "कॉल",
+		"groupsString": "समूहों",
+		"moreString": "अधिक"
+	}
+}
