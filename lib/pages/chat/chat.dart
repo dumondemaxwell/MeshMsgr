@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
 class Chat extends StatefulWidget {
+  const Chat({super.key});
+
   @override
   _ChatState createState() => _ChatState();
 }
@@ -80,6 +82,7 @@ class _ChatState extends State<Chat> {
       'type': 'contact'
     }
   ];
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -105,7 +108,7 @@ class _ChatState extends State<Chat> {
                             width: width,
                             height: 220.0,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.only(
+                              borderRadius: const BorderRadius.only(
                                 topRight: Radius.circular(5.0),
                                 topLeft: Radius.circular(5.0),
                               ),
@@ -122,7 +125,7 @@ class _ChatState extends State<Chat> {
                               padding: EdgeInsets.only(left: fixPadding),
                               alignment: Alignment.centerLeft,
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.only(
+                                borderRadius: const BorderRadius.only(
                                   topRight: Radius.circular(5.0),
                                   topLeft: Radius.circular(5.0),
                                 ),
@@ -142,7 +145,7 @@ class _ChatState extends State<Chat> {
                         height: 50.0,
                         decoration: BoxDecoration(
                           color: whiteColor,
-                          borderRadius: BorderRadius.only(
+                          borderRadius: const BorderRadius.only(
                             bottomLeft: Radius.circular(5.0),
                             bottomRight: Radius.circular(5.0),
                           ),
@@ -246,7 +249,7 @@ class _ChatState extends State<Chat> {
       ),
       body: ListView.builder(
         itemCount: chatList.length,
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         itemBuilder: (context, index) {
           final item = chatList[index];
           return InkWell(
@@ -259,7 +262,6 @@ class _ChatState extends State<Chat> {
             },
             child: Container(
               width: width,
-              height: 90.0,
               decoration: BoxDecoration(
                 color: whiteColor,
                 borderRadius: BorderRadius.circular(5.0),
@@ -334,7 +336,7 @@ class _ChatState extends State<Chat> {
                                               color: greyColor,
                                               size: 16.0,
                                             ),
-                                            SizedBox(width: 3.0),
+                                            const SizedBox(width: 3.0),
                                             Text(
                                               AppLocalizations.of(context)!
                                                   .translate('chat',
@@ -352,7 +354,7 @@ class _ChatState extends State<Chat> {
                                               color: greyColor,
                                               size: 16.0,
                                             ),
-                                            SizedBox(width: 3.0),
+                                            const SizedBox(width: 3.0),
                                             Text(
                                               AppLocalizations.of(context)!
                                                   .translate('chat',

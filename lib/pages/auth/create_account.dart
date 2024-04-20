@@ -44,7 +44,7 @@ class _CreateAccountState extends State<CreateAccount> {
           color: whiteColor,
         ),
       ),
-      body: WillPopScope(
+      body: PopScope(
         child: ListView(
           children: [
             const SizedBox(height: 30.0),
@@ -125,12 +125,10 @@ class _CreateAccountState extends State<CreateAccount> {
             ),
           ],
         ),
-        onWillPop: () async {
-          bool exitStatus = onWillPop();
+        onPopInvoked: (exitStatus) async {
           if (exitStatus) {
             exit(0);
           }
-          return false;
         },
       ),
     );
