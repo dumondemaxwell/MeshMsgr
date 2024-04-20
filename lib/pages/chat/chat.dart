@@ -250,8 +250,13 @@ class _ChatState extends State<Chat> {
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.search, color: whiteColor),
+            icon: Icon(Icons.add, color: whiteColor),
             onPressed: () {
+                  Navigator.push(
+                      context,
+                      PageTransition(
+                          type: PageTransitionType.rightToLeft,
+                          child: const SelectContact()));
             },
           ),
         ],
@@ -272,19 +277,6 @@ class _ChatState extends State<Chat> {
               },
             ),
         )
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(
-          Icons.message_outlined,
-          color: whiteColor,
-        ),
-        onPressed: () {
-          Navigator.push(
-              context,
-              PageTransition(
-                  type: PageTransitionType.rightToLeft,
-                  child: const SelectContact()));
-        },
       ),
       body: ListView.builder(
         itemCount: chatList.length,
