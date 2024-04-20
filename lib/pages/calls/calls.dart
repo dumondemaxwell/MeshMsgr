@@ -82,12 +82,11 @@ class _CallsState extends State<Calls> {
       ),
       body: ListView.builder(
         itemCount: callList.length,
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         itemBuilder: (context, index) {
           final item = callList[index];
           return Container(
             width: width,
-            height: 90.0,
             decoration: BoxDecoration(
               color: whiteColor,
               borderRadius: BorderRadius.circular(5.0),

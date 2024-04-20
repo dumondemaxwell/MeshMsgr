@@ -154,7 +154,7 @@ class _GroupsState extends State<Groups> {
       ),
       body: ListView.builder(
         itemCount: groupList.length,
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         itemBuilder: (context, index) {
           final item = groupList[index];
           return InkWell(
@@ -167,7 +167,6 @@ class _GroupsState extends State<Groups> {
             },
             child: Container(
               width: width,
-              height: 90.0,
               decoration: BoxDecoration(
                 color: whiteColor,
                 borderRadius: BorderRadius.circular(5.0),
