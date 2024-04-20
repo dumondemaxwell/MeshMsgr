@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
 class SelectContact extends StatefulWidget {
+  const SelectContact({super.key});
+
   @override
   _SelectContactState createState() => _SelectContactState();
 }
@@ -68,7 +70,7 @@ class _SelectContactState extends State<SelectContact> {
                   .translate('selectContact', 'selectContactString'),
               style: whiteNormalTextStyle,
             ),
-            SizedBox(height: 3.0),
+            const SizedBox(height: 3.0),
             Text(
               '232 contacts ${AppLocalizations.of(context)!.translate('selectContact', 'contactsString')}',
               style: whiteSmallTextStyle,
@@ -77,7 +79,7 @@ class _SelectContactState extends State<SelectContact> {
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.search),
+            icon: const Icon(Icons.search),
             onPressed: () {},
           ),
         ],
@@ -172,7 +174,7 @@ class _SelectContactState extends State<SelectContact> {
                                     style: blackNormalTextStyle,
                                     overflow: TextOverflow.ellipsis,
                                   ),
-                                  SizedBox(height: 5.0),
+                                  const SizedBox(height: 5.0),
                                   Text(
                                     item['about']!,
                                     style: greySmallTextStyle,
@@ -233,7 +235,7 @@ class _SelectContactState extends State<SelectContact> {
                                         style: blackNormalTextStyle,
                                         overflow: TextOverflow.ellipsis,
                                       ),
-                                      SizedBox(height: 5.0),
+                                      const SizedBox(height: 5.0),
                                       Text(
                                         item['about']!,
                                         style: greySmallTextStyle,
@@ -318,7 +320,7 @@ class _SelectContactState extends State<SelectContact> {
                                     style: blackNormalTextStyle,
                                     overflow: TextOverflow.ellipsis,
                                   ),
-                                  SizedBox(height: 5.0),
+                                  const SizedBox(height: 5.0),
                                   Text(
                                     item['about']!,
                                     style: greySmallTextStyle,

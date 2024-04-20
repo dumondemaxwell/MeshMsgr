@@ -24,7 +24,8 @@ Future main() async {
 class MyApp extends StatelessWidget {
   final AppLanguage? appLanguage;
 
-  MyApp({this.appLanguage});
+  const MyApp({super.key, this.appLanguage});
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<AppLanguage>(
@@ -42,7 +43,7 @@ class MyApp extends StatelessWidget {
             ),
           ),
           debugShowCheckedModeBanner: false,
-          home: OnBoarding(),
+          home: const OnBoarding(),
           locale: model.appLocal,
           supportedLocales: const [
             Locale('en', 'US'),

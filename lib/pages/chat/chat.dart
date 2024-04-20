@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:mesh_msgr/constants/constants.dart';
 import 'package:mesh_msgr/functions/localizations.dart';
 import 'package:mesh_msgr/pages/chat/message_screen.dart';
@@ -7,15 +9,26 @@ import 'package:mesh_msgr/pages/phone_call.dart';
 import 'package:mesh_msgr/pages/video_call.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:sidebarx/sidebarx.dart';
 
 class Chat extends StatefulWidget {
   const Chat({super.key});
 
   @override
-  _ChatState createState() => _ChatState();
+  State<Chat> createState() => _ChatState();
 }
 
 class _ChatState extends State<Chat> {
+  final endpoint_groups = [
+    {
+      'name': 'Infura1',
+      'endpoint': 'https://mainnet.infura.io/v3/your_project_id'
+    },
+    {
+      'name': 'Infura2',
+      'endpoint': 'https://mainnet.infura.io/v3/your_project_id'
+    }
+  ];
   final chatList = [
     {
       'name': 'Ronan',
@@ -85,6 +98,7 @@ class _ChatState extends State<Chat> {
 
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<ScaffoldState> key = GlobalKey(); // Create a key
     double width = MediaQuery.of(context).size.width;
 
     showProfileImage(String name, String imagePath) {
@@ -220,19 +234,44 @@ class _ChatState extends State<Chat> {
     }
 
     return Scaffold(
+      key: key,
       appBar: AppBar(
+        backgroundColor: primaryColor,
         automaticallyImplyLeading: false,
-        elevation: 0.0,
         title: Text(
           AppLocalizations.of(context)!.translate('chat', 'chatString'),
           style: appBarTextStyle,
         ),
+        leading: IconButton(
+          icon: Icon(Icons.menu, color: whiteColor),
+          onPressed: () {
+            key.currentState!.openDrawer();
+          },
+        ),
         actions: [
           IconButton(
             icon: Icon(Icons.search, color: whiteColor),
-            onPressed: () {},
+            onPressed: () {
+            },
           ),
         ],
+      ),
+      drawer: Drawer(
+        child: SizedBox(
+          child: ListView.builder(
+              itemCount: endpoint_groups.length,
+              physics: const BouncingScrollPhysics(),
+              itemBuilder: (context, index) {
+                final item = endpoint_groups[index];
+                return ListTile(
+                  title: Text(item['name']!),
+                  onTap: () {
+                    // todo: change context of chat
+                  },
+                );
+              },
+            ),
+        )
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(
@@ -244,7 +283,7 @@ class _ChatState extends State<Chat> {
               context,
               PageTransition(
                   type: PageTransitionType.rightToLeft,
-                  child: SelectContact()));
+                  child: const SelectContact()));
         },
       ),
       body: ListView.builder(

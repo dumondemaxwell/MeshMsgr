@@ -100,7 +100,7 @@ class _ProfileState extends State<Profile> {
           heightSpace,
           Material(
             elevation: 1.0,
-            borderRadius: BorderRadius.only(
+            borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(30.0),
               bottomRight: Radius.circular(30.0),
             ),
@@ -108,7 +108,7 @@ class _ProfileState extends State<Profile> {
               padding: EdgeInsets.all(fixPadding),
               decoration: BoxDecoration(
                 color: scaffoldBgColor,
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(30.0),
                   bottomRight: Radius.circular(30.0),
                 ),
@@ -144,13 +144,13 @@ class _ProfileState extends State<Profile> {
               style: blackHeadingTextStyle,
             ),
           ),
-          Container(
+          SizedBox(
             height: 80.0,
             width: double.infinity,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: 6,
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               itemBuilder: (context, index) {
                 final item = mediaList[index];
                 return Padding(
@@ -273,7 +273,7 @@ class _ProfileState extends State<Profile> {
                       '+1 123456',
                       style: blackNormalTextStyle,
                     ),
-                    SizedBox(height: 5.0),
+                    const SizedBox(height: 5.0),
                     Text(
                       AppLocalizations.of(context)!
                           .translate('profile', 'mobileString'),
@@ -358,7 +358,7 @@ class _ProfileState extends State<Profile> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Icon(
+            const Icon(
               Icons.block,
               color: Colors.red,
               size: 22.0,
@@ -366,7 +366,7 @@ class _ProfileState extends State<Profile> {
             widthSpace,
             Text(
               AppLocalizations.of(context)!.translate('profile', 'blockString'),
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.red,
                 fontSize: 16.0,
               ),
@@ -399,7 +399,7 @@ class _ProfileState extends State<Profile> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Icon(
+            const Icon(
               Icons.thumb_down,
               color: Colors.red,
               size: 22.0,
@@ -408,7 +408,7 @@ class _ProfileState extends State<Profile> {
             Text(
               AppLocalizations.of(context)!
                   .translate('profile', 'reportContactString'),
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.red,
                 fontSize: 16.0,
               ),

@@ -12,8 +12,8 @@ import 'package:flutter/material.dart';
 class MessageScreen extends StatefulWidget {
   final String? name;
   final String? imagePath;
-  MessageScreen({Key? key, @required this.name, @required this.imagePath})
-      : super(key: key);
+  MessageScreen({super.key, @required this.name, @required this.imagePath});
+
   @override
   _MessageScreenState createState() => _MessageScreenState();
 }
@@ -21,7 +21,7 @@ class MessageScreen extends StatefulWidget {
 class _MessageScreenState extends State<MessageScreen> {
   final msgController = TextEditingController();
   DateTime now = DateTime.now();
-  ScrollController _scrollController = new ScrollController();
+  final ScrollController _scrollController = ScrollController();
   String? amPm;
   final chatData = [
     {
@@ -88,9 +88,9 @@ class _MessageScreenState extends State<MessageScreen> {
   void _scrollToBottom() {
     if (_scrollController.hasClients) {
       _scrollController.animateTo(0.0,
-          duration: Duration(milliseconds: 300), curve: Curves.elasticOut);
+          duration: const Duration(milliseconds: 300), curve: Curves.elasticOut);
     } else {
-      Timer(Duration(milliseconds: 400), () => _scrollToBottom());
+      Timer(const Duration(milliseconds: 400), () => _scrollToBottom());
     }
   }
 
@@ -103,7 +103,7 @@ class _MessageScreenState extends State<MessageScreen> {
         Container(
           width: width,
           height: height,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage('assets/chat_bg.jpg'),
               fit: BoxFit.cover,
@@ -240,10 +240,10 @@ class _MessageScreenState extends State<MessageScreen> {
             controller: _scrollController,
             itemCount: chatData.length,
             reverse: true,
-            physics: BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             itemBuilder: (context, index) {
               final item = chatData[index];
-              return Container(
+              return SizedBox(
                 width: width,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -255,8 +255,8 @@ class _MessageScreenState extends State<MessageScreen> {
                       children: <Widget>[
                         Padding(
                           padding: (item['role'] == 'sender')
-                              ? EdgeInsets.only(right: 100.0)
-                              : EdgeInsets.only(left: 100.0),
+                              ? const EdgeInsets.only(right: 100.0)
+                              : const EdgeInsets.only(left: 100.0),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: (item['role'] == 'sender')
@@ -265,8 +265,8 @@ class _MessageScreenState extends State<MessageScreen> {
                             children: <Widget>[
                               (item['type'] == 'text')
                                   ? Container(
-                                      padding: EdgeInsets.all(10.0),
-                                      margin: EdgeInsets.only(
+                                      padding: const EdgeInsets.all(10.0),
+                                      margin: const EdgeInsets.only(
                                           left: 10.0, right: 10.0),
                                       decoration: BoxDecoration(
                                         borderRadius:
@@ -302,7 +302,7 @@ class _MessageScreenState extends State<MessageScreen> {
                                             child: Container(
                                               width: 150.0,
                                               height: 150.0,
-                                              margin: EdgeInsets.only(
+                                              margin: const EdgeInsets.only(
                                                   left: 10.0, right: 10.0),
                                               decoration: BoxDecoration(
                                                 borderRadius:
@@ -320,8 +320,8 @@ class _MessageScreenState extends State<MessageScreen> {
                                           ),
                                         )
                                       : Container(
-                                          padding: EdgeInsets.all(10.0),
-                                          margin: EdgeInsets.only(
+                                          padding: const EdgeInsets.all(10.0),
+                                          margin: const EdgeInsets.only(
                                               left: 10.0, right: 10.0),
                                           decoration: BoxDecoration(
                                             borderRadius:
@@ -346,7 +346,7 @@ class _MessageScreenState extends State<MessageScreen> {
                                                         ? primaryColor
                                                         : Colors.white,
                                               ),
-                                              SizedBox(width: 10.0),
+                                              const SizedBox(width: 10.0),
                                               Container(
                                                 height: 8.0,
                                                 width: 0.7,
@@ -355,7 +355,7 @@ class _MessageScreenState extends State<MessageScreen> {
                                                         ? primaryColor
                                                         : Colors.white,
                                               ),
-                                              SizedBox(width: 10.0),
+                                              const SizedBox(width: 10.0),
                                               Text(
                                                 item['contactName']!,
                                                 style: TextStyle(
@@ -370,7 +370,7 @@ class _MessageScreenState extends State<MessageScreen> {
                                           ),
                                         ),
                               Padding(
-                                padding: EdgeInsets.all(10.0),
+                                padding: const EdgeInsets.all(10.0),
                                 child: Row(
                                   mainAxisAlignment: (item['role'] == 'sender')
                                       ? MainAxisAlignment.start
@@ -386,12 +386,12 @@ class _MessageScreenState extends State<MessageScreen> {
                                             color: Colors.white38,
                                             size: 16.0,
                                           ),
-                                    SizedBox(
+                                    const SizedBox(
                                       width: 7.0,
                                     ),
                                     Text(
                                       item['time']!,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         color: Colors.white38,
                                         fontSize: 12.0,
                                         fontWeight: FontWeight.w400,
@@ -414,7 +414,7 @@ class _MessageScreenState extends State<MessageScreen> {
         Container(
           width: width,
           height: 70.0,
-          padding: EdgeInsets.all(10.0),
+          padding: const EdgeInsets.all(10.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -427,18 +427,18 @@ class _MessageScreenState extends State<MessageScreen> {
                 ),
                 child: TextField(
                   controller: msgController,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 13.0,
                     color: Colors.white,
                   ),
                   decoration: InputDecoration(
                     hintText: AppLocalizations.of(context)!
                         .translate('messageScreen', 'typeAMessage'),
-                    hintStyle: TextStyle(
+                    hintStyle: const TextStyle(
                       fontSize: 13.0,
                       color: Colors.white60,
                     ),
-                    contentPadding: EdgeInsets.only(left: 10.0),
+                    contentPadding: const EdgeInsets.only(left: 10.0),
                     border: InputBorder.none,
                   ),
                 ),
@@ -455,7 +455,7 @@ class _MessageScreenState extends State<MessageScreen> {
                     borderRadius: BorderRadius.circular(20.0),
                     color: Colors.white.withOpacity(0.3),
                   ),
-                  child: Icon(
+                  child: const Icon(
                     Icons.attach_file,
                     color: Colors.yellow,
                     size: 18.0,
@@ -499,7 +499,7 @@ class _MessageScreenState extends State<MessageScreen> {
                     borderRadius: BorderRadius.circular(20.0),
                     color: Colors.white.withOpacity(0.3),
                   ),
-                  child: Icon(
+                  child: const Icon(
                     Icons.send,
                     color: Colors.yellow,
                     size: 18.0,

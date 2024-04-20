@@ -10,8 +10,10 @@ import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 
 class BottomBar extends StatefulWidget {
+  const BottomBar({super.key});
+
   @override
-  _BottomBarState createState() => _BottomBarState();
+  State<BottomBar> createState() => _BottomBarState();
 }
 
 class _BottomBarState extends State<BottomBar> {
@@ -64,30 +66,24 @@ class _BottomBarState extends State<BottomBar> {
           curve: Curves.easeInCirc,
           onTap: (int i) => changePage(i),
           backgroundColor: primaryColor,
-          elevation: 0.0,
+          elevation: 5.0,
         ),
       ),
-      body: WillPopScope(
+      body: PopScope(
         child: (currentIndex == 0)
-            ? Chat()
+            ? const Chat()
             : (currentIndex == 1)
                 ? Calls()
                 : (currentIndex == 2)
                     ? Groups()
                     : More(),
-        onWillPop: () async {
-          bool exitStatus = onWillPop();
-          if (exitStatus) {
+        onPopInvoked: (state) async {
+          if(state){
             exit(0);
           }
-          return false;
         },
       ),
     );
-  }
-
-  onWillPop() {
-    return true;
   }
 }
 
@@ -103,6 +99,6 @@ class Style extends StyleHook {
 
   @override
   TextStyle textStyle(Color color, String? style) {
-    return TextStyle(fontSize: 10.0, color: Colors.white);
+    return const TextStyle(fontSize: 10.0, color: Colors.white);
   }
 }

@@ -12,6 +12,7 @@ SizedBox widthSpace = const SizedBox(width: 10.0);
 
 TextStyle appBarTextStyle = TextStyle(
   color: whiteColor,
+  backgroundColor: primaryColor,
   fontFamily: 'Rubik',
   fontWeight: FontWeight.w500,
 );

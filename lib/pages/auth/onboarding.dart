@@ -11,11 +11,13 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:page_transition/page_transition.dart';
 
 class OnBoarding extends StatelessWidget {
+  const OnBoarding({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: WillPopScope(
-        child: Container(
+        child: SizedBox(
           width: double.infinity,
           height: MediaQuery.of(context).size.height,
           child: Column(
