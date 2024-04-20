@@ -39,19 +39,24 @@ class _BottomBarState extends State<BottomBar> {
         child: ConvexAppBar(
           items: [
             TabItem(
-              icon: Icons.chat_bubble_outline,
-              title: AppLocalizations.of(context)!
-                  .translate('bottomBar', 'chatString'),
-            ),
-            TabItem(
               icon: Icons.call,
               title: AppLocalizations.of(context)!
                   .translate('bottomBar', 'callsString'),
             ),
             TabItem(
-              icon: Icons.group,
+              icon: Icons.chat_bubble_outline,
               title: AppLocalizations.of(context)!
-                  .translate('bottomBar', 'groupsString'),
+                  .translate('bottomBar', 'chatString'),
+            ),
+            // TabItem(
+            //   icon: Icons.group,
+            //   title: AppLocalizations.of(context)!
+            //       .translate('bottomBar', 'groupsString'),
+            // ),
+            TabItem(
+              icon: Icons.currency_bitcoin,
+              title: AppLocalizations.of(context)!
+                  .translate('bottomBar','paymentsString'),
             ),
             TabItem(
               icon: Icons.more_horiz,
@@ -71,12 +76,10 @@ class _BottomBarState extends State<BottomBar> {
       ),
       body: PopScope(
         child: (currentIndex == 0)
-            ? const Chat()
+            ? Calls()
             : (currentIndex == 1)
-                ? Calls()
-                : (currentIndex == 2)
-                    ? Groups()
-                    : More(),
+                ? const Chat()
+                : More(),
         onPopInvoked: (state) async {
           if(state){
             exit(0);

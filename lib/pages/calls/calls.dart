@@ -10,6 +10,16 @@ class Calls extends StatefulWidget {
 }
 
 class _CallsState extends State<Calls> {
+  final endpoint_groups = [
+    {
+      'name': 'Infura1',
+      'endpoint': 'https://mainnet.infura.io/v3/your_project_id'
+    },
+    {
+      'name': 'Infura2',
+      'endpoint': 'https://mainnet.infura.io/v3/your_project_id'
+    }
+  ];
   final callList = [
     {
       'name': 'Ronan',
@@ -70,15 +80,41 @@ class _CallsState extends State<Calls> {
   ];
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<ScaffoldState> key = GlobalKey(); // Create a key
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
+      key: key,
       appBar: AppBar(
+        backgroundColor: primaryColor,
         automaticallyImplyLeading: false,
         elevation: 0.0,
         title: Text(
           AppLocalizations.of(context)!.translate('calls', 'callsString'),
           style: appBarTextStyle,
         ),
+        leading: IconButton(
+          icon: Icon(Icons.menu, color: whiteColor),
+          onPressed: () {
+            key.currentState!.openDrawer();
+          },
+        ),
+      ),
+      drawer: Drawer(
+          child: SizedBox(
+            child: ListView.builder(
+              itemCount: endpoint_groups.length,
+              physics: const BouncingScrollPhysics(),
+              itemBuilder: (context, index) {
+                final item = endpoint_groups[index];
+                return ListTile(
+                  title: Text(item['name']!),
+                  onTap: () {
+                    // todo: change context of chat
+                  },
+                );
+              },
+            ),
+          )
       ),
       body: ListView.builder(
         itemCount: callList.length,

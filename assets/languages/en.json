@@ -153,6 +153,7 @@
 		"chatString": "Chat",
 		"callsString": "Calls",
 		"groupsString": "Groups",
+		"paymentsString": "Payments",
 		"moreString": "More"
 	}
 }

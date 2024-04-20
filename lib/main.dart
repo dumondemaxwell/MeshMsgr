@@ -5,6 +5,7 @@ import 'package:mesh_msgr/functions/localizations.dart';
 import 'package:mesh_msgr/pages/auth/onboarding.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mesh_msgr/pages/bottom_bar.dart';
 import 'package:provider/provider.dart';
 
 Future main() async {
@@ -43,7 +44,7 @@ class MyApp extends StatelessWidget {
             ),
           ),
           debugShowCheckedModeBanner: false,
-          home: const OnBoarding(),
+          home: const BottomBar(),
           locale: model.appLocal,
           supportedLocales: const [
             Locale('en', 'US'),

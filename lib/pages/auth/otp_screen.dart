@@ -7,8 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class OTPScreen extends StatefulWidget {
+  const OTPScreen({super.key});
+
   @override
-  _OTPScreenState createState() => _OTPScreenState();
+  State<OTPScreen> createState() => _OTPScreenState();
 }
 
 class _OTPScreenState extends State<OTPScreen> {
@@ -34,7 +36,7 @@ class _OTPScreenState extends State<OTPScreen> {
                 borderRadius: BorderRadius.circular(10.0)),
             child: Container(
               height: 150.0,
-              padding: EdgeInsets.all(20.0),
+              padding: const EdgeInsets.all(20.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -57,10 +59,10 @@ class _OTPScreenState extends State<OTPScreen> {
         },
       );
       Timer(
-          Duration(seconds: 3),
+          const Duration(seconds: 3),
           () => Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => BottomBar()),
+                MaterialPageRoute(builder: (context) => const BottomBar()),
               ));
     }
 
@@ -108,7 +110,7 @@ class _OTPScreenState extends State<OTPScreen> {
                       .translate('otpScreen', 'enterOtpString'),
                   style: greyMediumTextStyle,
                 ),
-                SizedBox(height: 50.0),
+                const SizedBox(height: 50.0),
                 // OTP Box Start
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -135,7 +137,7 @@ class _OTPScreenState extends State<OTPScreen> {
                         controller: firstController,
                         style: blackHeadingTextStyle,
                         keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           contentPadding: EdgeInsets.all(18.0),
                           border: InputBorder.none,
                         ),
@@ -179,7 +181,7 @@ class _OTPScreenState extends State<OTPScreen> {
                         controller: secondController,
                         style: blackHeadingTextStyle,
                         keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           contentPadding: EdgeInsets.all(18.0),
                           border: InputBorder.none,
                         ),
@@ -223,7 +225,7 @@ class _OTPScreenState extends State<OTPScreen> {
                         controller: thirdController,
                         style: blackHeadingTextStyle,
                         keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           contentPadding: EdgeInsets.all(18.0),
                           border: InputBorder.none,
                         ),
@@ -267,7 +269,7 @@ class _OTPScreenState extends State<OTPScreen> {
                         controller: fourthController,
                         style: blackHeadingTextStyle,
                         keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           contentPadding: EdgeInsets.all(18.0),
                           border: InputBorder.none,
                         ),
