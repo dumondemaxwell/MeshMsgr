@@ -48,20 +48,15 @@ class _BottomBarState extends State<BottomBar> {
               title: AppLocalizations.of(context)!
                   .translate('bottomBar', 'chatString'),
             ),
-            // TabItem(
-            //   icon: Icons.group,
-            //   title: AppLocalizations.of(context)!
-            //       .translate('bottomBar', 'groupsString'),
-            // ),
             TabItem(
-              icon: Icons.currency_bitcoin,
+              icon: Icons.currency_exchange,
               title: AppLocalizations.of(context)!
                   .translate('bottomBar','paymentsString'),
             ),
             TabItem(
-              icon: Icons.more_horiz,
+              icon: Icons.settings,
               title: AppLocalizations.of(context)!
-                  .translate('bottomBar', 'moreString'),
+                  .translate('bottomBar', 'settingsString'),
             ),
           ],
           initialActiveIndex: currentIndex,

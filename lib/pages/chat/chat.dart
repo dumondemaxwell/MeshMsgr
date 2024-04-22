@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:mesh_msgr/constants/constants.dart';
 import 'package:mesh_msgr/functions/localizations.dart';
 import 'package:mesh_msgr/pages/chat/message_screen.dart';
@@ -8,14 +6,14 @@ import 'package:mesh_msgr/pages/chat/select_contact.dart';
 import 'package:mesh_msgr/pages/phone_call.dart';
 import 'package:mesh_msgr/pages/video_call.dart';
 import 'package:flutter/material.dart';
+import 'package:mesh_msgr/services/mongo.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:sidebarx/sidebarx.dart';
 
 class Chat extends StatefulWidget {
   const Chat({super.key});
 
   @override
-  State<Chat> createState() => _ChatState();
+  _ChatState createState() => _ChatState();
 }
 
 class _ChatState extends State<Chat> {
@@ -29,75 +27,10 @@ class _ChatState extends State<Chat> {
       'endpoint': 'https://mainnet.infura.io/v3/your_project_id'
     }
   ];
-  final chatList = [
-    {
-      'name': 'Ronan',
-      'image': 'assets/user_profile/user_1.jpg',
-      'time': '5m',
-      'msg': 'Hello',
-      'msgNumber': '3',
-      'type': 'msg'
-    },
-    {
-      'name': 'Brayden',
-      'image': 'assets/user_profile/user_2.jpg',
-      'time': '14m',
-      'msg': 'Hello',
-      'msgNumber': '8',
-      'type': 'file'
-    },
-    {
-      'name': 'Apollonia',
-      'image': 'assets/user_profile/user_3.jpg',
-      'time': '20m',
-      'msg': 'Hello',
-      'msgNumber': '0',
-      'type': 'contact'
-    },
-    {
-      'name': 'Beatriz',
-      'image': 'assets/user_profile/user_4.jpg',
-      'time': '1d',
-      'msg': 'Hello',
-      'msgNumber': '6',
-      'type': 'msg'
-    },
-    {
-      'name': 'Shira',
-      'image': 'assets/user_profile/user_5.jpg',
-      'time': '2d',
-      'msg': 'Hello',
-      'msgNumber': '0',
-      'type': 'file'
-    },
-    {
-      'name': 'Diego',
-      'image': 'assets/user_profile/user_6.jpg',
-      'time': '2d',
-      'msg': 'Hello',
-      'msgNumber': '0',
-      'type': 'contact'
-    },
-    {
-      'name': 'Marco',
-      'image': 'assets/user_profile/user_7.jpg',
-      'time': '2d',
-      'msg': 'Hello',
-      'msgNumber': '0',
-      'type': 'file'
-    },
-    {
-      'name': 'Steffan',
-      'image': 'assets/user_profile/user_8.jpg',
-      'time': '2d',
-      'msg': 'Hello',
-      'msgNumber': '2',
-      'type': 'contact'
-    }
-  ];
 
   @override
   Widget build(BuildContext context) {
+    final mongoDbService =  MongoService();
     final GlobalKey<ScaffoldState> key = GlobalKey(); // Create a key
     double width = MediaQuery.of(context).size.width;
 
@@ -233,174 +166,95 @@ class _ChatState extends State<Chat> {
       );
     }
 
-    return Scaffold(
-      key: key,
-      appBar: AppBar(
-        backgroundColor: primaryColor,
-        automaticallyImplyLeading: false,
-        title: Text(
-          AppLocalizations.of(context)!.translate('chat', 'chatString'),
-          style: appBarTextStyle,
-        ),
-        leading: IconButton(
-          icon: Icon(Icons.menu, color: whiteColor),
-          onPressed: () {
-            key.currentState!.openDrawer();
-          },
-        ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.add, color: whiteColor),
-            onPressed: () {
-                  Navigator.push(
-                      context,
-                      PageTransition(
-                          type: PageTransitionType.rightToLeft,
-                          child: const SelectContact()));
-            },
-          ),
-        ],
-      ),
-      drawer: Drawer(
-        child: SizedBox(
-          child: ListView.builder(
-              itemCount: endpoint_groups.length,
+    getMongoDbServiceFutureBuilder() {
+      return FutureBuilder(
+        future: mongoDbService.getMessagesAndGroupsForUser('test user'),
+        builder: (BuildContext context, AsyncSnapshot<List<Group>> snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return ListView.builder(
+              itemCount: snapshot.data?.length,
               physics: const BouncingScrollPhysics(),
               itemBuilder: (context, index) {
-                final item = endpoint_groups[index];
-                return ListTile(
-                  title: Text(item['name']!),
+                final item = snapshot.data?[index] as Group;
+                if(item.messages.isEmpty || item.members.isEmpty){
+                  return Container();
+                }
+
+                return InkWell(
                   onTap: () {
-                    // todo: change context of chat
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MessageScreen(
+                                name: item.name, imagePath: item.image)));
                   },
-                );
-              },
-            ),
-        )
-      ),
-      body: ListView.builder(
-        itemCount: chatList.length,
-        physics: const BouncingScrollPhysics(),
-        itemBuilder: (context, index) {
-          final item = chatList[index];
-          return InkWell(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => MessageScreen(
-                          name: item['name']!, imagePath: item['image']!)));
-            },
-            child: Container(
-              width: width,
-              decoration: BoxDecoration(
-                color: whiteColor,
-                borderRadius: BorderRadius.circular(5.0),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.all(fixPadding),
-                    child: Row(
+                  child: Container(
+                    width: width,
+                    decoration: BoxDecoration(
+                      color: whiteColor,
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
-                        Hero(
-                          tag: item['image']!,
-                          child: InkWell(
-                            onTap: () {
-                              showProfileImage(item['name']!, item['image']!);
-                            },
-                            child: Container(
-                              height: 60.0,
-                              width: 60.0,
-                              alignment: Alignment.topRight,
-                              padding: EdgeInsets.all(fixPadding),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(30.0),
-                                image: DecorationImage(
-                                  image: AssetImage(item['image']!),
-                                  fit: BoxFit.cover,
+                        Padding(
+                          padding: EdgeInsets.all(fixPadding),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              Hero(
+                                tag: item.image,
+                                child: InkWell(
+                                  onTap: () {
+                                    showProfileImage(item.name ?? '', item.image ?? '');
+                                  },
+                                  child: Container(
+                                    height: 60.0,
+                                    width: 60.0,
+                                    alignment: Alignment.topRight,
+                                    padding: EdgeInsets.all(fixPadding),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(30.0),
+                                      image: DecorationImage(
+                                        image: AssetImage(item.image != '' ? item.image : 'assets/user_profile/user_1.jpg'),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          width: width - ((fixPadding * 2) + 60.0 + 30.0),
-                          padding: EdgeInsets.all(fixPadding),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    item['name']!,
-                                    style: nemeTextStyle,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  widthSpace,
-                                  Text(
-                                    item['time']!,
-                                    style: timeTextStyle,
-                                  ),
-                                ],
-                              ),
-                              heightSpace,
-                              (item['type'] == 'msg')
-                                  ? Text(
-                                      item['msg']!,
-                                      style: msgTextStyle,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                    )
-                                  : (item['type'] == 'file')
-                                      ? Row(
-                                          children: <Widget>[
-                                            Icon(
-                                              Icons.attach_file,
-                                              color: greyColor,
-                                              size: 16.0,
-                                            ),
-                                            const SizedBox(width: 3.0),
-                                            Text(
-                                              AppLocalizations.of(context)!
-                                                  .translate('chat',
-                                                      'youShareAFileString'),
-                                              style: msgTextStyle,
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                            )
-                                          ],
-                                        )
-                                      : Row(
-                                          children: <Widget>[
-                                            Icon(
-                                              Icons.contacts,
-                                              color: greyColor,
-                                              size: 16.0,
-                                            ),
-                                            const SizedBox(width: 3.0),
-                                            Text(
-                                              AppLocalizations.of(context)!
-                                                  .translate('chat',
-                                                      'youShareAContactString'),
-                                              style: msgTextStyle,
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                            )
-                                          ],
+                              Container(
+                                width: width - ((fixPadding * 2) + 60.0 + 30.0),
+                                padding: EdgeInsets.all(fixPadding),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Row(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          item.name,
+                                          style: nemeTextStyle,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
                                         ),
-                            ],
-                          ),
-                        ),
-                        (item['msgNumber'] != '0')
-                            ? Container(
+                                        widthSpace,
+                                        Text(
+                                          item.updatedAt.toString(),
+                                          style: timeTextStyle,
+                                        ),
+                                      ],
+                                    ),
+                                    heightSpace,
+                                    Text(item.messages.last.message, style: msgTextStyle, maxLines: 1, overflow: TextOverflow.ellipsis),
+                                  ],
+                                ),
+                              ),
+                              (item.messages.isNotEmpty)
+                                  ? Container(
                                 height: 20.0,
                                 width: 20.0,
                                 alignment: Alignment.center,
@@ -409,27 +263,89 @@ class _ChatState extends State<Chat> {
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),
                                 child: Text(
-                                  item['msgNumber']!,
+                                  item.messages.last.message,
                                   style: badgeTextStyle,
                                 ),
                               )
-                            : Container(),
+                                  : Container(),
+                            ],
+                          ),
+                        ),
+                        // (index != ((snapshot.data?.length ?? 0) - 1))
+                        //     ? Container(
+                        //   width: width - (fixPadding * 2.0),
+                        //   height: 0.6,
+                        //   color: primaryColor.withOpacity(0.20),
+                        // )
+                        //     : Container(),
                       ],
                     ),
                   ),
-                  (index != (chatList.length - 1))
-                      ? Container(
-                          width: width - (fixPadding * 2.0),
-                          height: 0.6,
-                          color: primaryColor.withOpacity(0.20),
-                        )
-                      : Container(),
-                ],
-              ),
+                );
+              },
+            );
+          } else {
+            return const Scaffold(
+              body: CircularProgressIndicator(),
+            );
+          }
+        }
+      );
+    }
+
+    Scaffold getScaffold(){
+      return Scaffold(
+        key: key,
+        appBar: AppBar(
+          backgroundColor: primaryColor,
+          automaticallyImplyLeading: false,
+          title: Text(
+            AppLocalizations.of(context)!.translate('chat', 'chatString'),
+            style: appBarTextStyle,
+          ),
+          leading: IconButton(
+            icon: Icon(Icons.menu, color: whiteColor),
+            onPressed: () {
+              key.currentState!.openDrawer();
+            },
+          ),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.add, color: whiteColor),
+              onPressed: () async {
+                await mongoDbService.addGroup(Group(id: 'id', name: 'name', image: 'image', members: [
+                  'test_user',
+                ], messages: []));
+                // Navigator.push(
+                //     context,
+                //     PageTransition(
+                //         type: PageTransitionType.rightToLeft,
+                //         child: const SelectContact()));
+              },
             ),
-          );
-        },
-      ),
-    );
+          ],
+        ),
+        drawer: Drawer(
+            child: SizedBox(
+              child: ListView.builder(
+                itemCount: endpoint_groups.length,
+                physics: const BouncingScrollPhysics(),
+                itemBuilder: (context, index) {
+                  final item = endpoint_groups[index];
+                  return ListTile(
+                    title: Text(item['name']!),
+                    onTap: () {
+                      // todo: change context of chat
+                    },
+                  );
+                },
+              ),
+            )
+        ),
+        body: getMongoDbServiceFutureBuilder()
+      );
+    }
+
+    return getScaffold();
   }
 }

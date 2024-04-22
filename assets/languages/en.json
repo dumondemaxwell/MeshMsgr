@@ -20,8 +20,12 @@
 	},
 
 	"onboarding": {
-		"welcomeToMsgrString": "Welcome to Mesh Messenger",
-		"agreeAndContinueString": "Agree and continue"
+	    "signinWithAppleString": "Sign in with Apple",
+		"welcomeToMsgrString": "Mesh Messenger",
+		"agreeAndContinueString": "Agree and continue",
+		"description": "Messaging. Calling. Video. Group Chat. Payments. ",
+		"privacyPolicyString": "Privacy Policy",
+		"termsOfServiceString": "Terms of Service"
 	},
 
 	"otpScreen": {
@@ -154,6 +158,8 @@
 		"callsString": "Calls",
 		"groupsString": "Groups",
 		"paymentsString": "Payments",
-		"moreString": "More"
+		"moreString": "More",
+		"marketPlaceString": "Marketplace",
+		"settingsString": "Settings"
 	}
 }

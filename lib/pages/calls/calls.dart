@@ -1,25 +1,20 @@
 import 'package:mesh_msgr/constants/constants.dart';
-import 'package:mesh_msgr/functions/localizations.dart';
 import 'package:mesh_msgr/pages/phone_call.dart';
 import 'package:mesh_msgr/pages/video_call.dart';
 import 'package:flutter/material.dart';
+import 'package:mesh_msgr/services/endpoints.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:mesh_msgr/pages/chat/select_contact.dart';
 
 class Calls extends StatefulWidget {
+  const Calls({super.key});
+
   @override
-  _CallsState createState() => _CallsState();
+  State<Calls> createState() => _CallsState();
 }
 
 class _CallsState extends State<Calls> {
-  final endpoint_groups = [
-    {
-      'name': 'Infura1',
-      'endpoint': 'https://mainnet.infura.io/v3/your_project_id'
-    },
-    {
-      'name': 'Infura2',
-      'endpoint': 'https://mainnet.infura.io/v3/your_project_id'
-    }
-  ];
+  final callAndMessageService = EndpointStorageService();
   final callList = [
     {
       'name': 'Ronan',
@@ -78,6 +73,7 @@ class _CallsState extends State<Calls> {
       'callStatus': 'missed'
     }
   ];
+
   @override
   Widget build(BuildContext context) {
     final GlobalKey<ScaffoldState> key = GlobalKey(); // Create a key
@@ -89,7 +85,7 @@ class _CallsState extends State<Calls> {
         automaticallyImplyLeading: false,
         elevation: 0.0,
         title: Text(
-          AppLocalizations.of(context)!.translate('calls', 'callsString'),
+          'Calls',
           style: appBarTextStyle,
         ),
         leading: IconButton(
@@ -98,19 +94,29 @@ class _CallsState extends State<Calls> {
             key.currentState!.openDrawer();
           },
         ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.add, color: whiteColor),
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  PageTransition(
+                      type: PageTransitionType.rightToLeft,
+                      child: const SelectContact()));
+            },
+          ),
+        ],
       ),
       drawer: Drawer(
           child: SizedBox(
             child: ListView.builder(
-              itemCount: endpoint_groups.length,
+              itemCount: callAndMessageService.endpoints.length,
               physics: const BouncingScrollPhysics(),
               itemBuilder: (context, index) {
-                final item = endpoint_groups[index];
+                final item = callAndMessageService.endpoints[index];
                 return ListTile(
-                  title: Text(item['name']!),
-                  onTap: () {
-                    // todo: change context of chat
-                  },
+                  title: Text(item.name),
+                  onTap: () => callAndMessageService.current = item,
                 );
               },
             ),
@@ -169,12 +175,12 @@ class _CallsState extends State<Calls> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 (item['callStatus'] == 'dial')
-                                    ? Icon(Icons.call_made,
+                                    ? const Icon(Icons.call_made,
                                         color: Colors.blue, size: 16.0)
                                     : (item['callStatus'] == 'received')
-                                        ? Icon(Icons.call_received,
+                                        ? const Icon(Icons.call_received,
                                             color: Colors.orange, size: 16.0)
-                                        : Icon(Icons.call_missed,
+                                        : const Icon(Icons.call_missed,
                                             color: Colors.red, size: 16.0),
                                 widthSpace,
                                 Text(item['time']!, style: msgTextStyle),

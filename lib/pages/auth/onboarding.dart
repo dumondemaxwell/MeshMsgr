@@ -1,20 +1,20 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:mesh_msgr/constants/constants.dart';
 import 'package:mesh_msgr/functions/localizations.dart';
-import 'package:mesh_msgr/pages/auth/create_account.dart';
-import 'package:mesh_msgr/pages/auth/privacy_policy.dart';
-import 'package:mesh_msgr/pages/auth/terms_of_service.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:page_transition/page_transition.dart';
+import 'package:mesh_msgr/pages/bottom_bar.dart';
+import 'package:mesh_msgr/services/location.dart';
+import 'package:mesh_msgr/services/mongo.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class OnBoarding extends StatelessWidget {
-  const OnBoarding({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final mongoDbService = MongoService();
+
     return Scaffold(
       body: WillPopScope(
         child: SizedBox(
@@ -24,6 +24,7 @@ class OnBoarding extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              const Spacer(),
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -35,99 +36,68 @@ class OnBoarding extends StatelessWidget {
                     style: primaryColorBigHeadingTextStyle,
                   ),
                   const SizedBox(height: 60.0),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(30.0),
+                    child: Image.asset(
+                      'assets/main_launcher_icon.png',
+                      fit: BoxFit.cover,
+                      width: 260.0,
+                      height: 260.0,
+                    ),
+                  ),
+                  const SizedBox(height: 60.0),
                   Container(
-                    width: 260.0,
-                    height: 260.0,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(130.0),
-                      color: primaryColor.withOpacity(0.65),
-                    ),
-                    alignment: Alignment.center,
-                    child: Icon(
-                      FontAwesomeIcons.whatsapp,
-                      color: whiteColor,
-                      size: 130.0,
-                    ),
-                  ),
-                ],
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  RichText(
-                    textAlign: TextAlign.center,
-                    strutStyle: const StrutStyle(
-                      height: 2.0,
-                    ),
-                    text: TextSpan(
-                      text: 'Read our ',
-                      style: greyNormalTextStyle,
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: 'Privacy Policy',
-                          style: blueNormalTextStyle,
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              Navigator.push(
-                                  context,
-                                  PageTransition(
-                                      type: PageTransitionType.rightToLeft,
-                                      child: PrivacyPolicy()));
-                            },
-                        ),
-                        TextSpan(
-                          text: '. Tap \"Agree and continue\" to accept the ',
-                          style: greyNormalTextStyle,
-                        ),
-                        TextSpan(
-                          text: 'Terms of Service.',
-                          style: blueNormalTextStyle,
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              Navigator.push(
-                                  context,
-                                  PageTransition(
-                                      type: PageTransitionType.rightToLeft,
-                                      child: TermsOfService()));
-                            },
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 40.0),
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          PageTransition(
-                              type: PageTransitionType.rightToLeft,
-                              child: const CreateAccount()));
-                    },
-                    child: Container(
-                      height: 50.0,
-                      width: MediaQuery.of(context).size.width -
-                          (fixPadding * 8.0),
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(2.0),
-                        color: primaryColor,
-                      ),
-                      child: Text(
-                        AppLocalizations.of(context)!
-                            .translate('onboarding', 'agreeAndContinueString')
-                            .toUpperCase(),
-                        style: TextStyle(
-                          fontSize: 18.0,
-                          color: whiteColor,
-                          fontWeight: FontWeight.w300,
-                        ),
-                      ),
+                    padding: EdgeInsets.all(fixPadding * 3.0),
+                    child:                   Text(
+                      AppLocalizations.of(context)!
+                          .translate('onboarding', 'description'),
+                      style: primaryColorBigHeadingTextStyle,
                     ),
                   ),
                   const SizedBox(height: 60.0),
                 ],
               ),
+              Container(
+                padding: EdgeInsets.all(fixPadding * 3.0),
+                child: SignInWithAppleButton(
+                  onPressed: () async {
+                    var testUsername = "test user";
+                    var db = await mongoDbService.initDatabaseAsync();
+                    var collection = db.collection('users');
+                    collection.findAndModify(
+                      query: {
+                        'username': testUsername,
+                        'email': 'test email',
+                        'phone': '6467338401',
+                      },
+                      update: {
+                        r'$set': {
+                          'username': testUsername,
+                          'email': 'test email',
+                          'phone': 'test phone',
+                          'created_at': DateTime.now(),
+                          'updated_at': DateTime.now(),
+                        },
+                      },
+                      upsert: true,
+                    ).then((value) {
+                      var route = MaterialPageRoute(builder: (context) => const BottomBar());
+                      Navigator.push(context, route);
+                    }).catchError((error){
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        content: Text('Invalid Credentials. Please try again.'),
+                      ));
+                    });
+                    //   scopes: [
+                    //     AppleIDAuthorizationScopes.email,
+                    //     AppleIDAuthorizationScopes.fullName,
+                    //   ],
+                    // );
+                    // print(credential);
+                  },
+                ),
+              ),
+              const Spacer()
             ],
           ),
         ),

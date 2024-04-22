@@ -2,13 +2,15 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:mesh_msgr/constants/constants.dart';
 import 'package:mesh_msgr/functions/change_language.dart';
 import 'package:mesh_msgr/functions/localizations.dart';
-import 'package:mesh_msgr/pages/auth/onboarding.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mesh_msgr/pages/auth/onboarding.dart';
 import 'package:mesh_msgr/pages/bottom_bar.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 Future main() async {
+  await dotenv.load(fileName: ".env");
   WidgetsFlutterBinding.ensureInitialized();
   AppLanguage appLanguage = AppLanguage();
   await appLanguage.fetchLocale();
@@ -44,7 +46,7 @@ class MyApp extends StatelessWidget {
             ),
           ),
           debugShowCheckedModeBanner: false,
-          home: const BottomBar(),
+          home: OnBoarding(),
           locale: model.appLocal,
           supportedLocales: const [
             Locale('en', 'US'),
