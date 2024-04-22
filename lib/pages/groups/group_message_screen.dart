@@ -6,6 +6,7 @@ import 'package:mesh_msgr/pages/groups/group_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:mesh_msgr/constants/constants.dart';
 import 'package:mesh_msgr/pages/chat/full_screen_image.dart';
+import 'package:mesh_msgr/services/mongo.dart';
 
 extension StringExtension on String {
   String capitalize() {
@@ -14,9 +15,9 @@ extension StringExtension on String {
 }
 
 class GroupMessageScreen extends StatefulWidget {
-  final String? name;
-  final String? imagePath;
-  const GroupMessageScreen({super.key, @required this.name, @required this.imagePath});
+  MongoGroupModel group;
+
+  GroupMessageScreen({super.key, required this.group});
   @override
   _GroupMessageScreenState createState() => _GroupMessageScreenState();
 }
@@ -26,6 +27,8 @@ class _GroupMessageScreenState extends State<GroupMessageScreen> {
   DateTime now = DateTime.now();
   final ScrollController _scrollController = ScrollController();
   String? amPm;
+
+  final choices = ['Report', 'Exit Group'];
   final chatData = [
     {
       'role': 'me',
@@ -88,8 +91,6 @@ class _GroupMessageScreenState extends State<GroupMessageScreen> {
     },
   ];
 
-  static List<String> choices = <String>['Report', 'Exit Group'];
-
   @override
   void initState() {
     super.initState();
@@ -151,8 +152,8 @@ class _GroupMessageScreenState extends State<GroupMessageScreen> {
                           context,
                           MaterialPageRoute(
                             builder: (context) => GroupProfile(
-                              userName: widget.name!,
-                              userImage: widget.imagePath!,
+                              userName: widget.group.name,
+                              userImage: widget.group.image
                             ),
                           ),
                         );
@@ -169,7 +170,7 @@ class _GroupMessageScreenState extends State<GroupMessageScreen> {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(22.5),
                               image: DecorationImage(
-                                image: AssetImage(widget.imagePath!),
+                                image: AssetImage(widget.group.image),
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -182,7 +183,7 @@ class _GroupMessageScreenState extends State<GroupMessageScreen> {
                               SizedBox(
                                 width: width - 160.0,
                                 child: Text(
-                                  widget.name!,
+                                  widget.group.name,
                                   style: msgScreenNameTextStyle,
                                   overflow: TextOverflow.ellipsis,
                                 ),

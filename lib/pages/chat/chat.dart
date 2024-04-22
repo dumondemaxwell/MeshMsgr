@@ -105,12 +105,12 @@ class _ChatState extends State<Chat> {
                               icon: Icon(Icons.chat,
                                   color: primaryColor, size: 18.0),
                               onPressed: () {
-                                Navigator.pop(context);
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => MessageScreen(
-                                            name: name, imagePath: imagePath)));
+                                // Navigator.pop(context);
+                                // Navigator.push(
+                                //     context,
+                                //     MaterialPageRoute(
+                                //         builder: (context) => MessageScreen(
+                                //             name: name, imagePath: imagePath)));
                               },
                             ),
                             IconButton(
@@ -169,7 +169,7 @@ class _ChatState extends State<Chat> {
     getMongoDbServiceFutureBuilder() {
       return FutureBuilder(
         future: mongoDbService.getMessagesAndGroupsForUser('test user'),
-        builder: (BuildContext context, AsyncSnapshot<List<Group>> snapshot) {
+        builder: (BuildContext context, AsyncSnapshot<List<MongoGroupModel>> snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             return ListView.builder(
               itemCount: snapshot.requireData.length,
@@ -185,8 +185,7 @@ class _ChatState extends State<Chat> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => MessageScreen(
-                                name: item.name, imagePath: item.image)));
+                            builder: (context) => MessageScreen(group: item)));
                   },
                   child: Container(
                     width: width,
@@ -313,14 +312,14 @@ class _ChatState extends State<Chat> {
             IconButton(
               icon: Icon(Icons.add, color: whiteColor),
               onPressed: () async {
-                await mongoDbService.addGroup(Group(id: 'id', name: 'name', image: 'image', members: [
-                  'test_user',
-                ], messages: []));
-                // Navigator.push(
-                //     context,
-                //     PageTransition(
-                //         type: PageTransitionType.rightToLeft,
-                //         child: const SelectContact()));
+                // await mongoDbService.addGroup(Group(id: 'id', name: 'name', image: 'image', members: [
+                //   'test_user',
+                // ], messages: []));
+                Navigator.push(
+                    context,
+                    PageTransition(
+                        type: PageTransitionType.rightToLeft,
+                        child: const SelectContact()));
               },
             ),
           ],

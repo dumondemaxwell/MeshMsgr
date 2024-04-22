@@ -1,7 +1,7 @@
 import 'package:mongo_dart/mongo_dart.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-class Message {
+class MongoMessage {
   final String id;
   final String message;
   final String time;
@@ -9,7 +9,7 @@ class Message {
   final bool isSender;
   final DateTime createdAt = DateTime.now();
 
-  Message({
+  MongoMessage({
     required this.id,
     required this.message,
     required this.time,
@@ -19,16 +19,16 @@ class Message {
 }
 
 
-class Group {
+class MongoGroupModel {
   final String id;
   final String name;
   final String image;
   final List<String> members;
-  final List<Message> messages;
+  final List<MongoMessage> messages;
   final DateTime createdAt = DateTime.now();
   DateTime updatedAt = DateTime.now();
 
-  Group({
+  MongoGroupModel({
     required this.id,
     required this.name,
     required this.image,
@@ -68,21 +68,21 @@ class MongoService {
     return db;
   }
 
-  Future<List<Group>> getMessagesAndGroupsForUser(String username) async {
+  Future<List<MongoGroupModel>> getMessagesAndGroupsForUser(String username) async {
     var db = await initDatabaseAsync();
-    var groups = <Group>[];
+    var groups = <MongoGroupModel>[];
     var groupCollection = db.collection('groups');
     var messageCollection = db.collection('messages');
 
     var result = await groupCollection.find(where.eq('members', username)).toList();
     for (var group in result) {
       var messages = await messageCollection.find(where.eq('groupId', group['_id'].toString())).toList();
-      groups.add(Group(
+      groups.add(MongoGroupModel(
         id: group['_id'].toString(),
         name: group['name'],
         image: group['image'],
         members: List<String>.from(group['members']),
-        messages: messages.map((message) => Message(
+        messages: messages.map((message) => MongoMessage(
           id: message['_id'].toString(),
           message: message['message'],
           time: message['time'],
@@ -95,7 +95,7 @@ class MongoService {
     return groups;
   }
 
-  Future<void> addMessageToGroup(String groupId, Message message) async {
+  Future<void> addMessageToGroup(String groupId, MongoMessage message) async {
     var db = await initDatabaseAsync();
     await db.collection('messages').insert({
       'groupId': groupId,
@@ -106,7 +106,7 @@ class MongoService {
     });
   }
 
-  Future<void> addGroup(Group group) async {
+  Future<void> addGroup(MongoGroupModel group) async {
     var db = await initDatabaseAsync();
     await db.collection('groups').insert({
       'name': group.name,

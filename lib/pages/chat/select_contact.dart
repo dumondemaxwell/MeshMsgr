@@ -136,14 +136,14 @@ class _SelectContactState extends State<SelectContact> {
                     ),
                     InkWell(
                       onTap: () {
-                        Navigator.push(
-                            context,
-                            PageTransition(
-                                type: PageTransitionType.rightToLeft,
-                                child: MessageScreen(
-                                  name: item['name'],
-                                  imagePath: item['profileImage'],
-                                )));
+                        // Navigator.push(
+                        //     context,
+                        //     PageTransition(
+                        //         type: PageTransitionType.rightToLeft,
+                        //         child: MessageScreen(
+                        //           name: item['name'],
+                        //           imagePath: item['profileImage'],
+                        //         )));
                       },
                       child: Container(
                         padding: EdgeInsets.all(fixPadding),
@@ -196,14 +196,14 @@ class _SelectContactState extends State<SelectContact> {
                       children: [
                         InkWell(
                           onTap: () {
-                            Navigator.push(
-                                context,
-                                PageTransition(
-                                    type: PageTransitionType.rightToLeft,
-                                    child: MessageScreen(
-                                      name: item['name'],
-                                      imagePath: item['profileImage'],
-                                    )));
+                            // Navigator.push(
+                            //     context,
+                            //     PageTransition(
+                            //         type: PageTransitionType.rightToLeft,
+                            //         child: MessageScreen(
+                            //           name: item['name'],
+                            //           imagePath: item['profileImage'],
+                            //         )));
                           },
                           child: Container(
                             padding: EdgeInsets.all(fixPadding),
@@ -282,14 +282,14 @@ class _SelectContactState extends State<SelectContact> {
                     )
                   : InkWell(
                       onTap: () {
-                        Navigator.push(
-                            context,
-                            PageTransition(
-                                type: PageTransitionType.rightToLeft,
-                                child: MessageScreen(
-                                  name: item['name'],
-                                  imagePath: item['profileImage'],
-                                )));
+                        // Navigator.push(
+                        //     context,
+                        //     PageTransition(
+                        //         type: PageTransitionType.rightToLeft,
+                        //         child: MessageScreen(
+                        //           name: item['name'],
+                        //           imagePath: item['profileImage'],
+                        //         )));
                       },
                       child: Container(
                         padding: EdgeInsets.all(fixPadding),

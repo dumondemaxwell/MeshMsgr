@@ -4,7 +4,6 @@ import 'package:mesh_msgr/constants/constants.dart';
 import 'package:mesh_msgr/functions/localizations.dart';
 import 'package:mesh_msgr/pages/calls/calls.dart';
 import 'package:mesh_msgr/pages/chat/chat.dart';
-import 'package:mesh_msgr/pages/groups/groups.dart';
 import 'package:mesh_msgr/pages/more/more.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';

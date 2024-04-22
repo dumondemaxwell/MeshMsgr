@@ -291,12 +291,12 @@ class _ProfileState extends State<Profile> {
                         color: primaryColor,
                       ),
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => MessageScreen(
-                                    name: widget.userName,
-                                    imagePath: widget.userImage)));
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) => MessageScreen(
+                        //             name: widget.userName,
+                        //             imagePath: widget.userImage)));
                       },
                     ),
                     IconButton(

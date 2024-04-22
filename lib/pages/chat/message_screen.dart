@@ -8,11 +8,11 @@ import 'package:mesh_msgr/pages/chat/profile.dart';
 import 'package:mesh_msgr/pages/phone_call.dart';
 import 'package:mesh_msgr/pages/video_call.dart';
 import 'package:flutter/material.dart';
+import 'package:mesh_msgr/services/mongo.dart';
 
 class MessageScreen extends StatefulWidget {
-  final String? name;
-  final String? imagePath;
-  MessageScreen({super.key, @required this.name, @required this.imagePath});
+  MongoGroupModel group;
+  MessageScreen({super.key, required this.group});
 
   @override
   _MessageScreenState createState() => _MessageScreenState();
@@ -20,9 +20,9 @@ class MessageScreen extends StatefulWidget {
 
 class _MessageScreenState extends State<MessageScreen> {
   final msgController = TextEditingController();
-  DateTime now = DateTime.now();
   final ScrollController _scrollController = ScrollController();
   String? amPm;
+  DateTime now = DateTime.now();
   final chatData = [
     {
       'role': 'me',
@@ -100,16 +100,6 @@ class _MessageScreenState extends State<MessageScreen> {
     double height = MediaQuery.of(context).size.height;
     return Stack(
       children: <Widget>[
-        Container(
-          width: width,
-          height: height,
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/chat_bg.jpg'),
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
         BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 6.0, sigmaY: 6.0),
           child: Container(
@@ -127,7 +117,7 @@ class _MessageScreenState extends State<MessageScreen> {
                   icon: Icon(Icons.arrow_back_ios, color: whiteColor),
                   onPressed: () {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => BottomBar()));
+                        MaterialPageRoute(builder: (context) => const BottomBar()));
                   },
                 ),
                 titleSpacing: 0.0,
@@ -137,15 +127,15 @@ class _MessageScreenState extends State<MessageScreen> {
                   children: <Widget>[
                     InkWell(
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => Profile(
-                              userName: widget.name!,
-                              userImage: widget.imagePath!,
-                            ),
-                          ),
-                        );
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) => Profile(
+                        //       userName: widget.group.name,
+                        //       userImage: widget.group.image,
+                        //     ),
+                        //   ),
+                        // );
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -159,7 +149,7 @@ class _MessageScreenState extends State<MessageScreen> {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(22.5),
                               image: DecorationImage(
-                                image: AssetImage(widget.imagePath!),
+                                image: AssetImage(widget.group.image),
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -170,7 +160,7 @@ class _MessageScreenState extends State<MessageScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                widget.name!,
+                                widget.group.name,
                                 style: msgScreenNameTextStyle,
                               ),
                               Text(
@@ -191,8 +181,8 @@ class _MessageScreenState extends State<MessageScreen> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => PhoneCall(
-                                        name: widget.name!,
-                                        imagePath: widget.imagePath!)));
+                                        name: widget.group.name,
+                                        imagePath: widget.group.image)));
                           },
                         ),
                         IconButton(
@@ -202,20 +192,9 @@ class _MessageScreenState extends State<MessageScreen> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        VideoCall(name: widget.name!)));
+                                        VideoCall(name: widget.group.name)));
                           },
                         ),
-                        PopupMenuButton<String>(
-                          onSelected: choiceAction,
-                          itemBuilder: (BuildContext context) {
-                            return choices.map((String choice) {
-                              return PopupMenuItem<String>(
-                                value: choice,
-                                child: Text(choice),
-                              );
-                            }).toList();
-                          },
-                        )
                       ],
                     ),
                   ],
