@@ -70,42 +70,25 @@ class MongoService {
 
   Future<List<Group>> getMessagesAndGroupsForUser(String username) async {
     var db = await initDatabaseAsync();
-    // var groups = <Group>[
-    //   Group(id: 'id', name: 'name', image: '', members: [
-    //     'member1',
-    //     'member2',
-    //     'member3',
-    //     'member4',
-    //     'member5',
-    //     'member6',
-    //     'member7',
-    //     'member8',
-    //   ], messages: [
-    //     Message(id: 'id', message: 'message', time: 'time', isRead: true, isSender: true),
-    //     Message(id: 'id', message: 'message', time: 'time', isRead: true, isSender: true),
-    //     Message(id: 'id', message: 'message', time: 'time', isRead: true, isSender: true),
-    //     Message(id: 'id', message: 'message', time: 'time', isRead: true, isSender: true),
-    //     Message(id: 'id', message: 'message', time: 'time', isRead: true, isSender: true),
-    //     Message(id: 'id', message: 'message', time: 'time', isRead: true, isSender: true),
-    //     Message(id: 'id', message: 'message', time: 'time', isRead: true, isSender: true),
-    //     Message(id: 'id', message: 'message', time: 'time', isRead: true, isSender: true),
-    //   ]),
-    // ];
-    //
     var groups = <Group>[];
     var groupCollection = db.collection('groups');
     var messageCollection = db.collection('messages');
 
     var result = await groupCollection.find(where.eq('members', username)).toList();
-    print('result: $result');
     for (var group in result) {
-      print('group: $group');
+      var messages = await messageCollection.find(where.eq('groupId', group['_id'].toString())).toList();
       groups.add(Group(
         id: group['_id'].toString(),
         name: group['name'],
         image: group['image'],
         members: List<String>.from(group['members']),
-        messages: [],
+        messages: messages.map((message) => Message(
+          id: message['_id'].toString(),
+          message: message['message'],
+          time: message['time'],
+          isRead: message['isRead'],
+          isSender: message['isSender'],
+        )).toList(),
       ));
     }
     print('groups: $groups');
