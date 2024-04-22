@@ -70,49 +70,45 @@ class MongoService {
 
   Future<List<Group>> getMessagesAndGroupsForUser(String username) async {
     var db = await initDatabaseAsync();
-    var groups = <Group>[
-      Group(id: 'id', name: 'name', image: '', members: [
-        'member1',
-        'member2',
-        'member3',
-        'member4',
-        'member5',
-        'member6',
-        'member7',
-        'member8',
-      ], messages: [
-        Message(id: 'id', message: 'message', time: 'time', isRead: true, isSender: true),
-        Message(id: 'id', message: 'message', time: 'time', isRead: true, isSender: true),
-        Message(id: 'id', message: 'message', time: 'time', isRead: true, isSender: true),
-        Message(id: 'id', message: 'message', time: 'time', isRead: true, isSender: true),
-        Message(id: 'id', message: 'message', time: 'time', isRead: true, isSender: true),
-        Message(id: 'id', message: 'message', time: 'time', isRead: true, isSender: true),
-        Message(id: 'id', message: 'message', time: 'time', isRead: true, isSender: true),
-        Message(id: 'id', message: 'message', time: 'time', isRead: true, isSender: true),
-      ]),
-    ];
-
-    // var groupCollection = db.collection('groups');
-    // var messageCollection = db.collection('messages');
+    // var groups = <Group>[
+    //   Group(id: 'id', name: 'name', image: '', members: [
+    //     'member1',
+    //     'member2',
+    //     'member3',
+    //     'member4',
+    //     'member5',
+    //     'member6',
+    //     'member7',
+    //     'member8',
+    //   ], messages: [
+    //     Message(id: 'id', message: 'message', time: 'time', isRead: true, isSender: true),
+    //     Message(id: 'id', message: 'message', time: 'time', isRead: true, isSender: true),
+    //     Message(id: 'id', message: 'message', time: 'time', isRead: true, isSender: true),
+    //     Message(id: 'id', message: 'message', time: 'time', isRead: true, isSender: true),
+    //     Message(id: 'id', message: 'message', time: 'time', isRead: true, isSender: true),
+    //     Message(id: 'id', message: 'message', time: 'time', isRead: true, isSender: true),
+    //     Message(id: 'id', message: 'message', time: 'time', isRead: true, isSender: true),
+    //     Message(id: 'id', message: 'message', time: 'time', isRead: true, isSender: true),
+    //   ]),
+    // ];
     //
-    // var result = await groupCollection.find(where.eq('members', username)).toList();
-    // for (var group in result) {
-    //   var groupMessages = <Message>[];
-    //   groups.add(Group(
-    //     id: group['_id'],
-    //     name: group['name'],
-    //     image: group['image'],
-    //     members: group['members'],
-    //     messages: groupMessages,
-    //   ));
-    // }
-    // groupCollection.modernFind().toList().then((value) {
-    //   for (var group in value) {
-    //     groups.add(Group(id: 'id', name: 'name', image: 'image', members: [], messages: []));
-    //   }
-    // });
+    var groups = <Group>[];
+    var groupCollection = db.collection('groups');
+    var messageCollection = db.collection('messages');
 
-    // print('groups: $groups');
+    var result = await groupCollection.find(where.eq('members', username)).toList();
+    print('result: $result');
+    for (var group in result) {
+      print('group: $group');
+      groups.add(Group(
+        id: group['_id'].toString(),
+        name: group['name'],
+        image: group['image'],
+        members: List<String>.from(group['members']),
+        messages: [],
+      ));
+    }
+    print('groups: $groups');
     return groups;
   }
 
@@ -132,7 +128,15 @@ class MongoService {
     await db.collection('groups').insert({
       'name': group.name,
       'image': group.image,
-      'members': group.members,
+      'members': [
+        ...group.members,
+      ],
+      'messages': [
+        ...group.messages,
+      ],
+      'createdAt': group.createdAt,
+      'updatedAt': group.updatedAt,
+      'public': false,
     });
   }
 }

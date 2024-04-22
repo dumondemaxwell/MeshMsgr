@@ -172,11 +172,11 @@ class _ChatState extends State<Chat> {
         builder: (BuildContext context, AsyncSnapshot<List<Group>> snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             return ListView.builder(
-              itemCount: snapshot.data?.length,
+              itemCount: snapshot.requireData.length,
               physics: const BouncingScrollPhysics(),
               itemBuilder: (context, index) {
-                final item = snapshot.data?[index] as Group;
-                if(item.messages.isEmpty || item.members.isEmpty){
+                var item = snapshot.data![index];
+                if(item.members.isEmpty){
                   return Container();
                 }
 
@@ -218,7 +218,7 @@ class _ChatState extends State<Chat> {
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(30.0),
                                       image: DecorationImage(
-                                        image: AssetImage(item.image != '' ? item.image : 'assets/user_profile/user_1.jpg'),
+                                        image: AssetImage(item.image.startsWith('data:image') ? item.image : 'assets/default_room_no_image.png'),
                                         fit: BoxFit.cover,
                                       ),
                                     ),
@@ -249,7 +249,7 @@ class _ChatState extends State<Chat> {
                                       ],
                                     ),
                                     heightSpace,
-                                    Text(item.messages.last.message, style: msgTextStyle, maxLines: 1, overflow: TextOverflow.ellipsis),
+                                    Text(item.messages.isNotEmpty? item.messages.last.message : 'No Conversation' , style: msgTextStyle, maxLines: 1, overflow: TextOverflow.ellipsis),
                                   ],
                                 ),
                               ),
