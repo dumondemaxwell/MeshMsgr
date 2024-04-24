@@ -37,7 +37,7 @@ class MongoGroupModel {
   });
 }
 
-class MongoService {
+class DatabaseProxyService {
   final requiredCollections = [
     'domains',
     'users',

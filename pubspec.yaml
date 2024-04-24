@@ -53,6 +53,8 @@ dependencies:
   flutter_dotenv: ^5.1.0
   sign_in_with_apple: ^6.1.0
   geolocator: ^11.0.0
+  realm: ^2.1.0
+  path_provider: ^2.1.3
 
 dev_dependencies:
   flutter_test:
@@ -77,6 +79,7 @@ flutter:
   assets:
     - .env
     - assets/
+    - assets/config/
     - assets/user_profile/
     - assets/group/
     - assets/hotel/

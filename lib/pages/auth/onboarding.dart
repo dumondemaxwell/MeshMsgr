@@ -5,15 +5,18 @@ import 'package:mesh_msgr/constants/constants.dart';
 import 'package:mesh_msgr/functions/localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:mesh_msgr/pages/bottom_bar.dart';
-import 'package:mesh_msgr/services/location.dart';
-import 'package:mesh_msgr/services/mongo.dart';
+import 'package:mesh_msgr/realm/app_services.dart';
+import 'package:mesh_msgr/realm/realm_services.dart';
+import 'package:provider/provider.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class OnBoarding extends StatelessWidget {
+  const OnBoarding({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final mongoDbService = MongoService();
+    final realmServices = Provider.of<RealmServices?>(context, listen: false);
+    final appServices = Provider.of<AppServices?>(context, listen: true);
 
     return Scaffold(
       body: WillPopScope(
@@ -61,39 +64,17 @@ class OnBoarding extends StatelessWidget {
                 padding: EdgeInsets.all(fixPadding * 3.0),
                 child: SignInWithAppleButton(
                   onPressed: () async {
-                    var testUsername = "test user";
-                    var db = await mongoDbService.initDatabaseAsync();
-                    var collection = db.collection('users');
-                    collection.findAndModify(
-                      query: {
-                        'username': testUsername,
-                        'email': 'test email',
-                        'phone': '6467338401',
-                      },
-                      update: {
-                        r'$set': {
-                          'username': testUsername,
-                          'email': 'test email',
-                          'phone': 'test phone',
-                          'created_at': DateTime.now(),
-                          'updated_at': DateTime.now(),
-                        },
-                      },
-                      upsert: true,
-                    ).then((value) {
-                      var route = MaterialPageRoute(builder: (context) => const BottomBar());
-                      Navigator.push(context, route);
-                    }).catchError((error){
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                        content: Text('Invalid Credentials. Please try again.'),
-                      ));
+                    final credential = await SignInWithApple.getAppleIDCredential(
+                      scopes: [
+                        AppleIDAuthorizationScopes.email,
+                        AppleIDAuthorizationScopes.fullName,
+                      ],
+                    );
+
+                    appServices?.loginWithApple(credential.identityToken ?? 'invalid token').then((value) {
+                      var newRoute = MaterialPageRoute(builder: (BuildContext context) => const BottomBar());
+                      Navigator.of(context).pushAndRemoveUntil(newRoute, (Route<dynamic> route) => false);
                     });
-                    //   scopes: [
-                    //     AppleIDAuthorizationScopes.email,
-                    //     AppleIDAuthorizationScopes.fullName,
-                    //   ],
-                    // );
-                    // print(credential);
                   },
                 ),
               ),

@@ -30,7 +30,7 @@ class _ChatState extends State<Chat> {
 
   @override
   Widget build(BuildContext context) {
-    final mongoDbService =  MongoService();
+    final mongoDbService =  DatabaseProxyService();
     final GlobalKey<ScaffoldState> key = GlobalKey(); // Create a key
     double width = MediaQuery.of(context).size.width;
 

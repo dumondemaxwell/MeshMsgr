@@ -248,36 +248,36 @@ class _SelectContactState extends State<SelectContact> {
                             ),
                           ),
                         ),
-                        Container(
-                          padding: EdgeInsets.all(fixPadding),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                width: 50.0,
-                                height: 50.0,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(25.0),
-                                ),
-                                child: Icon(
-                                  Icons.share,
-                                  color: blackColor,
-                                  size: 20.0,
-                                ),
-                              ),
-                              widthSpace,
-                              Expanded(
-                                child: Text(
-                                  AppLocalizations.of(context)!.translate(
-                                      'selectContact', 'inviteFriendsString'),
-                                  style: blackNormalTextStyle,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                        // Container(
+                        //   padding: EdgeInsets.all(fixPadding),
+                        //   child: Row(
+                        //     mainAxisAlignment: MainAxisAlignment.start,
+                        //     crossAxisAlignment: CrossAxisAlignment.center,
+                        //     children: [
+                        //       Container(
+                        //         width: 50.0,
+                        //         height: 50.0,
+                        //         alignment: Alignment.center,
+                        //         decoration: BoxDecoration(
+                        //           borderRadius: BorderRadius.circular(25.0),
+                        //         ),
+                        //         child: Icon(
+                        //           Icons.share,
+                        //           color: blackColor,
+                        //           size: 20.0,
+                        //         ),
+                        //       ),
+                        //       widthSpace,
+                        //       Expanded(
+                        //         child: Text(
+                        //           AppLocalizations.of(context)!.translate(
+                        //               'selectContact', 'inviteFriendsString'),
+                        //           style: blackNormalTextStyle,
+                        //         ),
+                        //       ),
+                        //     ],
+                        //   ),
+                        // ),
                       ],
                     )
                   : InkWell(
