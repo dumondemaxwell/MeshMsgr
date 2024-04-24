@@ -3,48 +3,56 @@ import 'package:mesh_msgr/realm/schemas.dart';
 import 'package:realm/realm.dart';
 
 class RealmServices extends ChangeNotifier {
+  static const getMyCreatedGroupsSubscription = "getMyCreatedGroupsSubscription";
   static const getMyGroupsSubscription = "getMyGroupsSubscription";
-  static const getAllGroupsSubscription = "getAllGroupsSubscription";
+  static const getMyCallsSubscription = "getMyCallsSubscription";
 
   bool offlineModeOn = false;
   bool isWaiting = false;
 
-  late Realm _realm;
+  late Realm realmInstance;
   User? currentUser;
   App app;
 
   RealmServices(this.app) {
     if (app.currentUser != null || currentUser != app.currentUser) {
       currentUser ??= app.currentUser;
-      _realm = Realm(Configuration.flexibleSync(currentUser!, [
+      realmInstance = Realm(Configuration.flexibleSync(currentUser!, [
         ApplicationUser.schema,
         ApplicationGroup.schema,
-        ApplicationMessage.schema
+        ApplicationMessage.schema,
+        ApplicationCall.schema
       ]));
-      if (_realm.subscriptions.isEmpty) {
+      if (realmInstance.subscriptions.isEmpty) {
         updateSubscriptions();
       }
     }
   }
 
+  Future<void> logOut() async {
+    await currentUser?.logOut();
+    currentUser = null;
+  }
+
   Future<void> updateSubscriptions() async {
-    _realm.subscriptions.update((mutableSubscriptions) {
+    realmInstance.subscriptions.update((mutableSubscriptions) {
       mutableSubscriptions.clear();
-      mutableSubscriptions.add(_realm.all<ApplicationGroup>(), name: getAllGroupsSubscription);
-      mutableSubscriptions.add(_realm.query<ApplicationGroup>(r'owner_id == $0', [currentUser?.id]), name: getMyGroupsSubscription);
+      mutableSubscriptions.add(realmInstance.query<ApplicationGroup>(r'owner_id == $0', [currentUser?.id]), name: getMyCreatedGroupsSubscription);
+      mutableSubscriptions.add(realmInstance.query<ApplicationGroup>(r'members CONTAINS $0', [currentUser?.id]), name: getMyGroupsSubscription);
+      mutableSubscriptions.add(realmInstance.query<ApplicationCall>(r'caller == $0 OR receiver == $0', [currentUser?.id]), name: getMyCallsSubscription);
     });
-    await _realm.subscriptions.waitForSynchronization();
+    await realmInstance.subscriptions.waitForSynchronization();
   }
 
   Future<void> sessionSwitch() async {
     offlineModeOn = !offlineModeOn;
     if (offlineModeOn) {
-      _realm.syncSession.pause();
+      realmInstance.syncSession.pause();
     } else {
       try {
         isWaiting = true;
         notifyListeners();
-        _realm.syncSession.resume();
+        realmInstance.syncSession.resume();
         await updateSubscriptions();
       } finally {
         isWaiting = false;
@@ -55,19 +63,19 @@ class RealmServices extends ChangeNotifier {
 
   // create new group
   Future<void> createGroup(String name, List<ApplicationUser> members, bool isPrivate, bool isFavorite) async {
-    await _realm.writeAsync(() {
+    await realmInstance.writeAsync(() {
       var id = ObjectId();
       var stamp = DateTime.now();
       var ownerId = currentUser!.id;
       var group  = ApplicationGroup(id, ownerId, name, isPrivate, isFavorite, stamp, stamp);
-      _realm.add(group);
+      realmInstance.add(group);
     });
   }
 
   // update group if the group is owned by logged in user
   Future<void> updateGroup(ApplicationGroup group) async {
     if (group.ownerId == currentUser!.id) {
-      await _realm.writeAsync(() {
+      await realmInstance.writeAsync(() {
         group.lastModified = DateTime.now();
       });
     }
@@ -77,8 +85,8 @@ class RealmServices extends ChangeNotifier {
   // delete group if the group is owned by logged in user
   Future<void> deleteGroup(ApplicationGroup group) async {
     if (group.ownerId == currentUser!.id) {
-      await _realm.writeAsync(() {
-        _realm.delete(group);
+      await realmInstance.writeAsync(() {
+        realmInstance.delete(group);
       });
     }
     notifyListeners();
@@ -87,12 +95,12 @@ class RealmServices extends ChangeNotifier {
 
   // create new message
   Future<void> createMessage(ApplicationGroup group, String text) async {
-    await _realm.writeAsync(() {
+    await realmInstance.writeAsync(() {
       var id = ObjectId();
       var sender = currentUser?.id ?? 'Anonymous';
       var timestamp = DateTime.now();
       var message = ApplicationMessage(id, sender, text, timestamp);
-      var insertedMsg = _realm.add(message);
+      var insertedMsg = realmInstance.add(message);
       group.messages.add(insertedMsg);
     });
     notifyListeners();
@@ -101,7 +109,7 @@ class RealmServices extends ChangeNotifier {
   // update message if the message is sent by logged in user
   Future<void> updateMessage(ApplicationMessage message) async {
     if (message.sender == currentUser!.id) {
-      await _realm.writeAsync(() {
+      await realmInstance.writeAsync(() {
         message.timestamp = DateTime.now();
       });
     }
@@ -111,8 +119,8 @@ class RealmServices extends ChangeNotifier {
   // delete message if the message is sent by logged in user
   Future<void> deleteMessage(ApplicationMessage message) async {
     if (message.sender == currentUser!.id) {
-      await _realm.writeAsync(() {
-        _realm.delete(message);
+      await realmInstance.writeAsync(() {
+        realmInstance.delete(message);
       });
     }
     notifyListeners();

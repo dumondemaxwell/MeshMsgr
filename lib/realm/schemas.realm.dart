@@ -12,16 +12,18 @@ class ApplicationUser extends _ApplicationUser
   ApplicationUser(
     ObjectId id,
     String username,
-    String email,
-    String phone, {
-    Iterable<ApplicationGroup> groups = const [],
+    DateTime lastActive,
+    DateTime createdOn,
+    bool isOnline, {
+    Iterable<String> groups = const [],
   }) {
     RealmObjectBase.set(this, '_id', id);
     RealmObjectBase.set(this, 'username', username);
-    RealmObjectBase.set(this, 'email', email);
-    RealmObjectBase.set(this, 'phone', phone);
-    RealmObjectBase.set<RealmList<ApplicationGroup>>(
-        this, 'groups', RealmList<ApplicationGroup>(groups));
+    RealmObjectBase.set<RealmList<String>>(
+        this, 'groups', RealmList<String>(groups));
+    RealmObjectBase.set(this, 'lastActive', lastActive);
+    RealmObjectBase.set(this, 'createdOn', createdOn);
+    RealmObjectBase.set(this, 'isOnline', isOnline);
   }
 
   ApplicationUser._();
@@ -38,22 +40,30 @@ class ApplicationUser extends _ApplicationUser
   set username(String value) => RealmObjectBase.set(this, 'username', value);
 
   @override
-  String get email => RealmObjectBase.get<String>(this, 'email') as String;
+  RealmList<String> get groups =>
+      RealmObjectBase.get<String>(this, 'groups') as RealmList<String>;
   @override
-  set email(String value) => RealmObjectBase.set(this, 'email', value);
-
-  @override
-  String get phone => RealmObjectBase.get<String>(this, 'phone') as String;
-  @override
-  set phone(String value) => RealmObjectBase.set(this, 'phone', value);
-
-  @override
-  RealmList<ApplicationGroup> get groups =>
-      RealmObjectBase.get<ApplicationGroup>(this, 'groups')
-          as RealmList<ApplicationGroup>;
-  @override
-  set groups(covariant RealmList<ApplicationGroup> value) =>
+  set groups(covariant RealmList<String> value) =>
       throw RealmUnsupportedSetError();
+
+  @override
+  DateTime get lastActive =>
+      RealmObjectBase.get<DateTime>(this, 'lastActive') as DateTime;
+  @override
+  set lastActive(DateTime value) =>
+      RealmObjectBase.set(this, 'lastActive', value);
+
+  @override
+  DateTime get createdOn =>
+      RealmObjectBase.get<DateTime>(this, 'createdOn') as DateTime;
+  @override
+  set createdOn(DateTime value) =>
+      RealmObjectBase.set(this, 'createdOn', value);
+
+  @override
+  bool get isOnline => RealmObjectBase.get<bool>(this, 'isOnline') as bool;
+  @override
+  set isOnline(bool value) => RealmObjectBase.set(this, 'isOnline', value);
 
   @override
   Stream<RealmObjectChanges<ApplicationUser>> get changes =>
@@ -67,9 +77,10 @@ class ApplicationUser extends _ApplicationUser
     return <String, dynamic>{
       '_id': id.toEJson(),
       'username': username.toEJson(),
-      'email': email.toEJson(),
-      'phone': phone.toEJson(),
       'groups': groups.toEJson(),
+      'lastActive': lastActive.toEJson(),
+      'createdOn': createdOn.toEJson(),
+      'isOnline': isOnline.toEJson(),
     };
   }
 
@@ -79,15 +90,17 @@ class ApplicationUser extends _ApplicationUser
       {
         '_id': EJsonValue id,
         'username': EJsonValue username,
-        'email': EJsonValue email,
-        'phone': EJsonValue phone,
         'groups': EJsonValue groups,
+        'lastActive': EJsonValue lastActive,
+        'createdOn': EJsonValue createdOn,
+        'isOnline': EJsonValue isOnline,
       } =>
         ApplicationUser(
           fromEJson(id),
           fromEJson(username),
-          fromEJson(email),
-          fromEJson(phone),
+          fromEJson(lastActive),
+          fromEJson(createdOn),
+          fromEJson(isOnline),
           groups: fromEJson(groups),
         ),
       _ => raiseInvalidEJson(ejson),
@@ -102,11 +115,11 @@ class ApplicationUser extends _ApplicationUser
       SchemaProperty('id', RealmPropertyType.objectid,
           mapTo: '_id', primaryKey: true),
       SchemaProperty('username', RealmPropertyType.string),
-      SchemaProperty('email', RealmPropertyType.string),
-      SchemaProperty('phone', RealmPropertyType.string),
-      SchemaProperty('groups', RealmPropertyType.object,
-          linkTarget: 'ApplicationGroup',
+      SchemaProperty('groups', RealmPropertyType.string,
           collectionType: RealmCollectionType.list),
+      SchemaProperty('lastActive', RealmPropertyType.timestamp),
+      SchemaProperty('createdOn', RealmPropertyType.timestamp),
+      SchemaProperty('isOnline', RealmPropertyType.bool),
     ]);
   }();
 
@@ -356,6 +369,122 @@ class ApplicationGroup extends _ApplicationGroup
       SchemaProperty('isFavorite', RealmPropertyType.bool),
       SchemaProperty('lastModified', RealmPropertyType.timestamp),
       SchemaProperty('createdOn', RealmPropertyType.timestamp),
+    ]);
+  }();
+
+  @override
+  SchemaObject get objectSchema => RealmObjectBase.getSchema(this) ?? schema;
+}
+
+class ApplicationCall extends _ApplicationCall
+    with RealmEntity, RealmObjectBase, RealmObject {
+  ApplicationCall(
+    ObjectId id,
+    String caller,
+    String receiver,
+    DateTime timestamp,
+    bool isVideoCall,
+    bool isMissed,
+  ) {
+    RealmObjectBase.set(this, '_id', id);
+    RealmObjectBase.set(this, 'caller', caller);
+    RealmObjectBase.set(this, 'receiver', receiver);
+    RealmObjectBase.set(this, 'timestamp', timestamp);
+    RealmObjectBase.set(this, 'isVideoCall', isVideoCall);
+    RealmObjectBase.set(this, 'isMissed', isMissed);
+  }
+
+  ApplicationCall._();
+
+  @override
+  ObjectId get id => RealmObjectBase.get<ObjectId>(this, '_id') as ObjectId;
+  @override
+  set id(ObjectId value) => RealmObjectBase.set(this, '_id', value);
+
+  @override
+  String get caller => RealmObjectBase.get<String>(this, 'caller') as String;
+  @override
+  set caller(String value) => RealmObjectBase.set(this, 'caller', value);
+
+  @override
+  String get receiver =>
+      RealmObjectBase.get<String>(this, 'receiver') as String;
+  @override
+  set receiver(String value) => RealmObjectBase.set(this, 'receiver', value);
+
+  @override
+  DateTime get timestamp =>
+      RealmObjectBase.get<DateTime>(this, 'timestamp') as DateTime;
+  @override
+  set timestamp(DateTime value) =>
+      RealmObjectBase.set(this, 'timestamp', value);
+
+  @override
+  bool get isVideoCall =>
+      RealmObjectBase.get<bool>(this, 'isVideoCall') as bool;
+  @override
+  set isVideoCall(bool value) =>
+      RealmObjectBase.set(this, 'isVideoCall', value);
+
+  @override
+  bool get isMissed => RealmObjectBase.get<bool>(this, 'isMissed') as bool;
+  @override
+  set isMissed(bool value) => RealmObjectBase.set(this, 'isMissed', value);
+
+  @override
+  Stream<RealmObjectChanges<ApplicationCall>> get changes =>
+      RealmObjectBase.getChanges<ApplicationCall>(this);
+
+  @override
+  ApplicationCall freeze() =>
+      RealmObjectBase.freezeObject<ApplicationCall>(this);
+
+  EJsonValue toEJson() {
+    return <String, dynamic>{
+      '_id': id.toEJson(),
+      'caller': caller.toEJson(),
+      'receiver': receiver.toEJson(),
+      'timestamp': timestamp.toEJson(),
+      'isVideoCall': isVideoCall.toEJson(),
+      'isMissed': isMissed.toEJson(),
+    };
+  }
+
+  static EJsonValue _toEJson(ApplicationCall value) => value.toEJson();
+  static ApplicationCall _fromEJson(EJsonValue ejson) {
+    return switch (ejson) {
+      {
+        '_id': EJsonValue id,
+        'caller': EJsonValue caller,
+        'receiver': EJsonValue receiver,
+        'timestamp': EJsonValue timestamp,
+        'isVideoCall': EJsonValue isVideoCall,
+        'isMissed': EJsonValue isMissed,
+      } =>
+        ApplicationCall(
+          fromEJson(id),
+          fromEJson(caller),
+          fromEJson(receiver),
+          fromEJson(timestamp),
+          fromEJson(isVideoCall),
+          fromEJson(isMissed),
+        ),
+      _ => raiseInvalidEJson(ejson),
+    };
+  }
+
+  static final schema = () {
+    RealmObjectBase.registerFactory(ApplicationCall._);
+    register(_toEJson, _fromEJson);
+    return SchemaObject(
+        ObjectType.realmObject, ApplicationCall, 'ApplicationCall', [
+      SchemaProperty('id', RealmPropertyType.objectid,
+          mapTo: '_id', primaryKey: true),
+      SchemaProperty('caller', RealmPropertyType.string),
+      SchemaProperty('receiver', RealmPropertyType.string),
+      SchemaProperty('timestamp', RealmPropertyType.timestamp),
+      SchemaProperty('isVideoCall', RealmPropertyType.bool),
+      SchemaProperty('isMissed', RealmPropertyType.bool),
     ]);
   }();
 
