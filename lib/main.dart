@@ -11,9 +11,14 @@ import 'package:mesh_msgr/realm/app_services.dart';
 import 'package:mesh_msgr/realm/realm_services.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 Future main() async {
   await dotenv.load(fileName: ".env");
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   Config realmConfig = await Config.getConfig('assets/config/atlasConfig.json');
 
