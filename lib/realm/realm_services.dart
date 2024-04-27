@@ -6,6 +6,9 @@ class RealmServices extends ChangeNotifier {
   static const getMyCreatedGroupsSubscription = "getMyCreatedGroupsSubscription";
   static const getMyGroupsSubscription = "getMyGroupsSubscription";
   static const getMyCallsSubscription = "getMyCallsSubscription";
+  static const getUserUpdateSubscription = "getUserUpdateSubscription";
+  static const getAllUserSettingsSubscription = "getAllUserSettingsSubscription";
+  static const getMyUserSettingsSubscription = "getMyUserSettingsSubscription";
 
   bool offlineModeOn = false;
   bool isWaiting = false;
@@ -15,10 +18,12 @@ class RealmServices extends ChangeNotifier {
   App app;
 
   RealmServices(this.app) {
+    print("RealmServices constructor");
     if (app.currentUser != null || currentUser != app.currentUser) {
       currentUser ??= app.currentUser;
       realmInstance = Realm(Configuration.flexibleSync(currentUser!, [
         ApplicationUser.schema,
+        ApplicationUserSettings.schema,
         ApplicationGroup.schema,
         ApplicationMessage.schema,
         ApplicationCall.schema
@@ -40,8 +45,19 @@ class RealmServices extends ChangeNotifier {
       mutableSubscriptions.add(realmInstance.query<ApplicationGroup>(r'owner_id == $0', [currentUser?.id]), name: getMyCreatedGroupsSubscription);
       mutableSubscriptions.add(realmInstance.query<ApplicationGroup>(r'members CONTAINS $0', [currentUser?.id]), name: getMyGroupsSubscription);
       mutableSubscriptions.add(realmInstance.query<ApplicationCall>(r'caller == $0 OR receiver == $0', [currentUser?.id]), name: getMyCallsSubscription);
+      mutableSubscriptions.add(realmInstance.query<ApplicationUser>(r'_id == $0', [ObjectId.fromHexString(currentUser!.id)]), name: getUserUpdateSubscription);
+      mutableSubscriptions.add(realmInstance.all<ApplicationUserSettings>(), name: getAllUserSettingsSubscription);
+      mutableSubscriptions.add(realmInstance.all<ApplicationUser>(), name: 'allUsers');
     });
     await realmInstance.subscriptions.waitForSynchronization();
+  }
+
+  ApplicationUser getUserByTokenId(String tokenId) {
+    return realmInstance.query<ApplicationUser>(r'id== $0', [tokenId]).first;
+  }
+
+  Future<ApplicationUser> getUserByToken(String token) async {
+    return realmInstance.query<ApplicationUser>(r'username == $0 OR id == $0', [token]).first;
   }
 
   Future<void> sessionSwitch() async {
@@ -123,6 +139,54 @@ class RealmServices extends ChangeNotifier {
         realmInstance.delete(message);
       });
     }
+    notifyListeners();
+  }
+
+  Future<void> createCall(String receiver, bool isVideoCall) async {
+    await realmInstance.writeAsync(() {
+      var id = ObjectId();
+      var caller = currentUser!.id;
+      var timestamp = DateTime.now();
+      var call = ApplicationCall(id, caller, receiver, timestamp, isVideoCall, false);
+      realmInstance.add(call);
+    });
+    notifyListeners();
+  }
+
+  Future<void> updateCall(ApplicationCall call, {bool? isMissed}) async {
+    if (call.caller == currentUser!.id) {
+      await realmInstance.writeAsync(() {
+        if (isMissed != null) {
+          call.isMissed = isMissed;
+        }
+      });
+    }
+    notifyListeners();
+  }
+
+  Future<void> deleteCall(ApplicationCall call) async {
+    if (call.caller == currentUser!.id) {
+      await realmInstance.writeAsync(() {
+        realmInstance.delete(call);
+      });
+    }
+    notifyListeners();
+  }
+
+  Future<void> close() async {
+    if (currentUser != null) {
+      await currentUser?.logOut();
+      currentUser = null;
+    }
+    realmInstance.close();
+  }
+
+  Future<void> addOrUpdateUser(ApplicationUser user, ApplicationUserSettings settings) async {
+    await realmInstance.writeAsync(() {
+      realmInstance.add(user, update: true);
+      realmInstance.add(settings, update: true);
+    });
+    await realmInstance.subscriptions.waitForSynchronization();
     notifyListeners();
   }
 }

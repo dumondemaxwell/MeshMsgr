@@ -11,19 +11,31 @@ class ApplicationUser extends _ApplicationUser
     with RealmEntity, RealmObjectBase, RealmObject {
   ApplicationUser(
     ObjectId id,
+    String linkerId,
     String username,
     DateTime lastActive,
     DateTime createdOn,
-    bool isOnline, {
+    String avatar,
+    bool enableSplash, {
     Iterable<String> groups = const [],
+    Iterable<String> sent = const [],
+    Iterable<String> received = const [],
+    ApplicationUserSettings? settings,
   }) {
     RealmObjectBase.set(this, '_id', id);
+    RealmObjectBase.set(this, 'linkerId', linkerId);
     RealmObjectBase.set(this, 'username', username);
     RealmObjectBase.set<RealmList<String>>(
         this, 'groups', RealmList<String>(groups));
+    RealmObjectBase.set<RealmList<String>>(
+        this, 'sent', RealmList<String>(sent));
+    RealmObjectBase.set<RealmList<String>>(
+        this, 'received', RealmList<String>(received));
     RealmObjectBase.set(this, 'lastActive', lastActive);
     RealmObjectBase.set(this, 'createdOn', createdOn);
-    RealmObjectBase.set(this, 'isOnline', isOnline);
+    RealmObjectBase.set(this, 'avatar', avatar);
+    RealmObjectBase.set(this, 'enableSplash', enableSplash);
+    RealmObjectBase.set(this, 'settings', settings);
   }
 
   ApplicationUser._();
@@ -32,6 +44,12 @@ class ApplicationUser extends _ApplicationUser
   ObjectId get id => RealmObjectBase.get<ObjectId>(this, '_id') as ObjectId;
   @override
   set id(ObjectId value) => RealmObjectBase.set(this, '_id', value);
+
+  @override
+  String get linkerId =>
+      RealmObjectBase.get<String>(this, 'linkerId') as String;
+  @override
+  set linkerId(String value) => RealmObjectBase.set(this, 'linkerId', value);
 
   @override
   String get username =>
@@ -44,6 +62,20 @@ class ApplicationUser extends _ApplicationUser
       RealmObjectBase.get<String>(this, 'groups') as RealmList<String>;
   @override
   set groups(covariant RealmList<String> value) =>
+      throw RealmUnsupportedSetError();
+
+  @override
+  RealmList<String> get sent =>
+      RealmObjectBase.get<String>(this, 'sent') as RealmList<String>;
+  @override
+  set sent(covariant RealmList<String> value) =>
+      throw RealmUnsupportedSetError();
+
+  @override
+  RealmList<String> get received =>
+      RealmObjectBase.get<String>(this, 'received') as RealmList<String>;
+  @override
+  set received(covariant RealmList<String> value) =>
       throw RealmUnsupportedSetError();
 
   @override
@@ -61,9 +93,24 @@ class ApplicationUser extends _ApplicationUser
       RealmObjectBase.set(this, 'createdOn', value);
 
   @override
-  bool get isOnline => RealmObjectBase.get<bool>(this, 'isOnline') as bool;
+  String get avatar => RealmObjectBase.get<String>(this, 'avatar') as String;
   @override
-  set isOnline(bool value) => RealmObjectBase.set(this, 'isOnline', value);
+  set avatar(String value) => RealmObjectBase.set(this, 'avatar', value);
+
+  @override
+  bool get enableSplash =>
+      RealmObjectBase.get<bool>(this, 'enableSplash') as bool;
+  @override
+  set enableSplash(bool value) =>
+      RealmObjectBase.set(this, 'enableSplash', value);
+
+  @override
+  ApplicationUserSettings? get settings =>
+      RealmObjectBase.get<ApplicationUserSettings>(this, 'settings')
+          as ApplicationUserSettings?;
+  @override
+  set settings(covariant ApplicationUserSettings? value) =>
+      RealmObjectBase.set(this, 'settings', value);
 
   @override
   Stream<RealmObjectChanges<ApplicationUser>> get changes =>
@@ -76,11 +123,16 @@ class ApplicationUser extends _ApplicationUser
   EJsonValue toEJson() {
     return <String, dynamic>{
       '_id': id.toEJson(),
+      'linkerId': linkerId.toEJson(),
       'username': username.toEJson(),
       'groups': groups.toEJson(),
+      'sent': sent.toEJson(),
+      'received': received.toEJson(),
       'lastActive': lastActive.toEJson(),
       'createdOn': createdOn.toEJson(),
-      'isOnline': isOnline.toEJson(),
+      'avatar': avatar.toEJson(),
+      'enableSplash': enableSplash.toEJson(),
+      'settings': settings.toEJson(),
     };
   }
 
@@ -89,19 +141,29 @@ class ApplicationUser extends _ApplicationUser
     return switch (ejson) {
       {
         '_id': EJsonValue id,
+        'linkerId': EJsonValue linkerId,
         'username': EJsonValue username,
         'groups': EJsonValue groups,
+        'sent': EJsonValue sent,
+        'received': EJsonValue received,
         'lastActive': EJsonValue lastActive,
         'createdOn': EJsonValue createdOn,
-        'isOnline': EJsonValue isOnline,
+        'avatar': EJsonValue avatar,
+        'enableSplash': EJsonValue enableSplash,
+        'settings': EJsonValue settings,
       } =>
         ApplicationUser(
           fromEJson(id),
+          fromEJson(linkerId),
           fromEJson(username),
           fromEJson(lastActive),
           fromEJson(createdOn),
-          fromEJson(isOnline),
+          fromEJson(avatar),
+          fromEJson(enableSplash),
           groups: fromEJson(groups),
+          sent: fromEJson(sent),
+          received: fromEJson(received),
+          settings: fromEJson(settings),
         ),
       _ => raiseInvalidEJson(ejson),
     };
@@ -110,16 +172,201 @@ class ApplicationUser extends _ApplicationUser
   static final schema = () {
     RealmObjectBase.registerFactory(ApplicationUser._);
     register(_toEJson, _fromEJson);
-    return SchemaObject(
-        ObjectType.realmObject, ApplicationUser, 'ApplicationUser', [
+    return SchemaObject(ObjectType.realmObject, ApplicationUser, 'users', [
       SchemaProperty('id', RealmPropertyType.objectid,
           mapTo: '_id', primaryKey: true),
+      SchemaProperty('linkerId', RealmPropertyType.string),
       SchemaProperty('username', RealmPropertyType.string),
       SchemaProperty('groups', RealmPropertyType.string,
           collectionType: RealmCollectionType.list),
+      SchemaProperty('sent', RealmPropertyType.string,
+          collectionType: RealmCollectionType.list),
+      SchemaProperty('received', RealmPropertyType.string,
+          collectionType: RealmCollectionType.list),
       SchemaProperty('lastActive', RealmPropertyType.timestamp),
       SchemaProperty('createdOn', RealmPropertyType.timestamp),
+      SchemaProperty('avatar', RealmPropertyType.string),
+      SchemaProperty('enableSplash', RealmPropertyType.bool),
+      SchemaProperty('settings', RealmPropertyType.object,
+          optional: true, linkTarget: 'user_settings'),
+    ]);
+  }();
+
+  @override
+  SchemaObject get objectSchema => RealmObjectBase.getSchema(this) ?? schema;
+}
+
+class ApplicationUserSettings extends _ApplicationUserSettings
+    with RealmEntity, RealmObjectBase, RealmObject {
+  static var _defaultsSet = false;
+
+  ApplicationUserSettings(
+    ObjectId id,
+    bool isOnline,
+    bool isSplashOn,
+    bool isLocationOn,
+    DateTime lastModified,
+    DateTime createdOn, {
+    bool isDarkMode = false,
+    bool isNotificationOn = true,
+    bool isSoundOn = true,
+  }) {
+    if (!_defaultsSet) {
+      _defaultsSet = RealmObjectBase.setDefaults<ApplicationUserSettings>({
+        'isDarkMode': false,
+        'isNotificationOn': true,
+        'isSoundOn': true,
+      });
+    }
+    RealmObjectBase.set(this, '_id', id);
+    RealmObjectBase.set(this, 'isDarkMode', isDarkMode);
+    RealmObjectBase.set(this, 'isNotificationOn', isNotificationOn);
+    RealmObjectBase.set(this, 'isSoundOn', isSoundOn);
+    RealmObjectBase.set(this, 'isOnline', isOnline);
+    RealmObjectBase.set(this, 'isSplashOn', isSplashOn);
+    RealmObjectBase.set(this, 'isLocationOn', isLocationOn);
+    RealmObjectBase.set(this, 'lastModified', lastModified);
+    RealmObjectBase.set(this, 'createdOn', createdOn);
+  }
+
+  ApplicationUserSettings._();
+
+  @override
+  ObjectId get id => RealmObjectBase.get<ObjectId>(this, '_id') as ObjectId;
+  @override
+  set id(ObjectId value) => RealmObjectBase.set(this, '_id', value);
+
+  @override
+  bool get isDarkMode => RealmObjectBase.get<bool>(this, 'isDarkMode') as bool;
+  @override
+  set isDarkMode(bool value) => RealmObjectBase.set(this, 'isDarkMode', value);
+
+  @override
+  bool get isNotificationOn =>
+      RealmObjectBase.get<bool>(this, 'isNotificationOn') as bool;
+  @override
+  set isNotificationOn(bool value) =>
+      RealmObjectBase.set(this, 'isNotificationOn', value);
+
+  @override
+  bool get isSoundOn => RealmObjectBase.get<bool>(this, 'isSoundOn') as bool;
+  @override
+  set isSoundOn(bool value) => RealmObjectBase.set(this, 'isSoundOn', value);
+
+  @override
+  bool get isOnline => RealmObjectBase.get<bool>(this, 'isOnline') as bool;
+  @override
+  set isOnline(bool value) => RealmObjectBase.set(this, 'isOnline', value);
+
+  @override
+  bool get isSplashOn => RealmObjectBase.get<bool>(this, 'isSplashOn') as bool;
+  @override
+  set isSplashOn(bool value) => RealmObjectBase.set(this, 'isSplashOn', value);
+
+  @override
+  bool get isLocationOn =>
+      RealmObjectBase.get<bool>(this, 'isLocationOn') as bool;
+  @override
+  set isLocationOn(bool value) =>
+      RealmObjectBase.set(this, 'isLocationOn', value);
+
+  @override
+  DateTime get lastModified =>
+      RealmObjectBase.get<DateTime>(this, 'lastModified') as DateTime;
+  @override
+  set lastModified(DateTime value) =>
+      RealmObjectBase.set(this, 'lastModified', value);
+
+  @override
+  DateTime get createdOn =>
+      RealmObjectBase.get<DateTime>(this, 'createdOn') as DateTime;
+  @override
+  set createdOn(DateTime value) =>
+      RealmObjectBase.set(this, 'createdOn', value);
+
+  @override
+  RealmResults<ApplicationUser> get user {
+    if (!isManaged) {
+      throw RealmError('Using backlinks is only possible for managed objects.');
+    }
+    return RealmObjectBase.get<ApplicationUser>(this, 'user')
+        as RealmResults<ApplicationUser>;
+  }
+
+  @override
+  set user(covariant RealmResults<ApplicationUser> value) =>
+      throw RealmUnsupportedSetError();
+
+  @override
+  Stream<RealmObjectChanges<ApplicationUserSettings>> get changes =>
+      RealmObjectBase.getChanges<ApplicationUserSettings>(this);
+
+  @override
+  ApplicationUserSettings freeze() =>
+      RealmObjectBase.freezeObject<ApplicationUserSettings>(this);
+
+  EJsonValue toEJson() {
+    return <String, dynamic>{
+      '_id': id.toEJson(),
+      'isDarkMode': isDarkMode.toEJson(),
+      'isNotificationOn': isNotificationOn.toEJson(),
+      'isSoundOn': isSoundOn.toEJson(),
+      'isOnline': isOnline.toEJson(),
+      'isSplashOn': isSplashOn.toEJson(),
+      'isLocationOn': isLocationOn.toEJson(),
+      'lastModified': lastModified.toEJson(),
+      'createdOn': createdOn.toEJson(),
+    };
+  }
+
+  static EJsonValue _toEJson(ApplicationUserSettings value) => value.toEJson();
+  static ApplicationUserSettings _fromEJson(EJsonValue ejson) {
+    return switch (ejson) {
+      {
+        '_id': EJsonValue id,
+        'isDarkMode': EJsonValue isDarkMode,
+        'isNotificationOn': EJsonValue isNotificationOn,
+        'isSoundOn': EJsonValue isSoundOn,
+        'isOnline': EJsonValue isOnline,
+        'isSplashOn': EJsonValue isSplashOn,
+        'isLocationOn': EJsonValue isLocationOn,
+        'lastModified': EJsonValue lastModified,
+        'createdOn': EJsonValue createdOn,
+      } =>
+        ApplicationUserSettings(
+          fromEJson(id),
+          fromEJson(isOnline),
+          fromEJson(isSplashOn),
+          fromEJson(isLocationOn),
+          fromEJson(lastModified),
+          fromEJson(createdOn),
+          isDarkMode: fromEJson(isDarkMode),
+          isNotificationOn: fromEJson(isNotificationOn),
+          isSoundOn: fromEJson(isSoundOn),
+        ),
+      _ => raiseInvalidEJson(ejson),
+    };
+  }
+
+  static final schema = () {
+    RealmObjectBase.registerFactory(ApplicationUserSettings._);
+    register(_toEJson, _fromEJson);
+    return SchemaObject(
+        ObjectType.realmObject, ApplicationUserSettings, 'user_settings', [
+      SchemaProperty('id', RealmPropertyType.objectid,
+          mapTo: '_id', primaryKey: true),
+      SchemaProperty('isDarkMode', RealmPropertyType.bool),
+      SchemaProperty('isNotificationOn', RealmPropertyType.bool),
+      SchemaProperty('isSoundOn', RealmPropertyType.bool),
       SchemaProperty('isOnline', RealmPropertyType.bool),
+      SchemaProperty('isSplashOn', RealmPropertyType.bool),
+      SchemaProperty('isLocationOn', RealmPropertyType.bool),
+      SchemaProperty('lastModified', RealmPropertyType.timestamp),
+      SchemaProperty('createdOn', RealmPropertyType.timestamp),
+      SchemaProperty('user', RealmPropertyType.linkingObjects,
+          linkOriginProperty: 'settings',
+          collectionType: RealmCollectionType.list,
+          linkTarget: 'users'),
     ]);
   }();
 
@@ -205,7 +452,7 @@ class ApplicationMessage extends _ApplicationMessage
     RealmObjectBase.registerFactory(ApplicationMessage._);
     register(_toEJson, _fromEJson);
     return SchemaObject(
-        ObjectType.realmObject, ApplicationMessage, 'ApplicationMessage', [
+        ObjectType.realmObject, ApplicationMessage, 'messages', [
       SchemaProperty('id', RealmPropertyType.objectid,
           mapTo: '_id', primaryKey: true),
       SchemaProperty('sender', RealmPropertyType.string),
@@ -354,8 +601,7 @@ class ApplicationGroup extends _ApplicationGroup
   static final schema = () {
     RealmObjectBase.registerFactory(ApplicationGroup._);
     register(_toEJson, _fromEJson);
-    return SchemaObject(
-        ObjectType.realmObject, ApplicationGroup, 'ApplicationGroup', [
+    return SchemaObject(ObjectType.realmObject, ApplicationGroup, 'groups', [
       SchemaProperty('id', RealmPropertyType.objectid,
           mapTo: '_id', primaryKey: true),
       SchemaProperty('ownerId', RealmPropertyType.string, mapTo: 'owner_id'),
@@ -363,8 +609,7 @@ class ApplicationGroup extends _ApplicationGroup
       SchemaProperty('members', RealmPropertyType.string,
           collectionType: RealmCollectionType.list),
       SchemaProperty('messages', RealmPropertyType.object,
-          linkTarget: 'ApplicationMessage',
-          collectionType: RealmCollectionType.list),
+          linkTarget: 'messages', collectionType: RealmCollectionType.list),
       SchemaProperty('isPrivate', RealmPropertyType.bool),
       SchemaProperty('isFavorite', RealmPropertyType.bool),
       SchemaProperty('lastModified', RealmPropertyType.timestamp),
@@ -476,8 +721,7 @@ class ApplicationCall extends _ApplicationCall
   static final schema = () {
     RealmObjectBase.registerFactory(ApplicationCall._);
     register(_toEJson, _fromEJson);
-    return SchemaObject(
-        ObjectType.realmObject, ApplicationCall, 'ApplicationCall', [
+    return SchemaObject(ObjectType.realmObject, ApplicationCall, 'calls', [
       SchemaProperty('id', RealmPropertyType.objectid,
           mapTo: '_id', primaryKey: true),
       SchemaProperty('caller', RealmPropertyType.string),

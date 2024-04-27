@@ -2,18 +2,44 @@ import 'package:realm/realm.dart';
 part 'schemas.realm.dart';
 
 @RealmModel()
+@MapTo('users')
 class _ApplicationUser {
   @PrimaryKey()
   @MapTo('_id')
   late ObjectId id;
+  late String linkerId;
   late String username;
   late List<String> groups;
+  late List<String> sent;
+  late List<String> received;
   late DateTime lastActive;
   late DateTime createdOn;
-  late bool isOnline;
+  late String avatar;
+  late bool enableSplash;
+  late _ApplicationUserSettings? settings;
 }
 
 @RealmModel()
+@MapTo('user_settings')
+class _ApplicationUserSettings {
+  @PrimaryKey()
+  @MapTo('_id')
+  late ObjectId id;
+  late bool isDarkMode = false;
+  late bool isNotificationOn = true;
+  late bool isSoundOn = true;
+  late bool isOnline;
+  late bool isSplashOn;
+  late bool isLocationOn;
+  late DateTime lastModified;
+  late DateTime createdOn;
+
+  @Backlink(#settings)
+  late Iterable<_ApplicationUser> user;
+}
+
+@RealmModel()
+@MapTo('messages')
 class _ApplicationMessage {
   @PrimaryKey()
   @MapTo('_id')
@@ -25,6 +51,7 @@ class _ApplicationMessage {
 }
 
 @RealmModel()
+@MapTo('groups')
 class _ApplicationGroup {
   @PrimaryKey()
   @MapTo('_id')
@@ -43,6 +70,7 @@ class _ApplicationGroup {
 }
 
 @RealmModel()
+@MapTo('calls')
 class _ApplicationCall {
   @PrimaryKey()
   @MapTo('_id')

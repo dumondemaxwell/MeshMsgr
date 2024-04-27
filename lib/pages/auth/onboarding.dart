@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:math';
 
 import 'package:mesh_msgr/constants/constants.dart';
 import 'package:mesh_msgr/functions/localizations.dart';
@@ -7,7 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:mesh_msgr/pages/bottom_bar.dart';
 import 'package:mesh_msgr/realm/app_services.dart';
 import 'package:mesh_msgr/realm/realm_services.dart';
+import 'package:mesh_msgr/realm/schemas.dart';
 import 'package:provider/provider.dart';
+import 'package:realm/realm.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class OnBoarding extends StatelessWidget {
@@ -19,7 +20,7 @@ class OnBoarding extends StatelessWidget {
     final appServices = Provider.of<AppServices?>(context, listen: true);
 
     return Scaffold(
-      body: WillPopScope(
+      body: PopScope(
         child: SizedBox(
           width: double.infinity,
           height: MediaQuery.of(context).size.height,
@@ -61,7 +62,7 @@ class OnBoarding extends StatelessWidget {
                 ],
               ),
               Container(
-                padding: EdgeInsets.all(fixPadding * 3.0),
+                padding: EdgeInsets.only(left: fixPadding * 2.5, right: fixPadding * 2.5, bottom: fixPadding * 5),
                 child: SignInWithAppleButton(
                   onPressed: () async {
                     final credential = await SignInWithApple.getAppleIDCredential(
@@ -72,8 +73,41 @@ class OnBoarding extends StatelessWidget {
                     );
 
                     appServices?.loginWithApple(credential.identityToken ?? 'invalid token').then((value) {
-                      var newRoute = MaterialPageRoute(builder: (BuildContext context) => const BottomBar());
-                      Navigator.of(context).pushAndRemoveUntil(newRoute, (Route<dynamic> route) => false);
+                      var objId = ObjectId();
+                      var email = value.profile.email;
+                      var lastActive = DateTime.now();
+                      var createdOn = DateTime.now();
+                      var isOnline = true;
+                      var avatar = value.profile.pictureUrl;
+
+                      print("object id: $objId email: $email lastActive: $lastActive createdOn: $createdOn isOnline: $isOnline avatar: $avatar}");
+                      if(email == null){
+                        throw Exception("Email can not be empty");
+                      }
+                      var user = ApplicationUser(
+                        objId,
+                        value.id,
+                        email,
+                        DateTime.now(),
+                        DateTime.now(),
+                        avatar ?? '',
+                        true,
+                      );
+
+                      realmServices?.addOrUpdateUser(user, ApplicationUserSettings(
+                        ObjectId(),
+                        true,
+                        true,
+                        true,
+                        DateTime.now(),
+                        DateTime.now()
+                      )).then((value){
+                          print("object navigate to new route");
+                          var newRoute = MaterialPageRoute(builder: (BuildContext context) => const BottomBar());
+                          Navigator.of(context).pushAndRemoveUntil(newRoute, (Route<dynamic> route) => false);
+                      }).catchError((error){
+                        print("object error: $error");
+                      });
                     });
                   },
                 ),
@@ -82,12 +116,10 @@ class OnBoarding extends StatelessWidget {
             ],
           ),
         ),
-        onWillPop: () async {
-          bool exitStatus = onWillPop();
-          if (exitStatus) {
+        onPopInvoked: (bool state) async {
+          if (state) {
             exit(0);
           }
-          return false;
         },
       ),
     );

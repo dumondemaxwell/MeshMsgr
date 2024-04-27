@@ -20,64 +20,6 @@ class Calls extends StatefulWidget {
 
 class _CallsState extends State<Calls> {
   final callAndMessageService = EndpointStorageService();
-  final callList = [
-    {
-      'name': 'Ronan',
-      'image': 'assets/user_profile/user_1.jpg',
-      'time': 'June 09, 11:30 PM',
-      'type': 'voice',
-      'callStatus': 'dial'
-    },
-    {
-      'name': 'Brayden',
-      'image': 'assets/user_profile/user_2.jpg',
-      'time': 'June 09, 10:14 PM',
-      'type': 'video',
-      'callStatus': 'receive'
-    },
-    {
-      'name': 'Apollonia',
-      'image': 'assets/user_profile/user_3.jpg',
-      'time': 'June 08, 10:30 AM',
-      'type': 'voice',
-      'callStatus': 'missed'
-    },
-    {
-      'name': 'Beatriz',
-      'image': 'assets/user_profile/user_4.jpg',
-      'time': 'June 07, 12:30 AM',
-      'type': 'video',
-      'callStatus': 'dial'
-    },
-    {
-      'name': 'Shira',
-      'image': 'assets/user_profile/user_5.jpg',
-      'time': 'June 06, 10:30 AM',
-      'type': 'video',
-      'callStatus': 'missed'
-    },
-    {
-      'name': 'Diego',
-      'image': 'assets/user_profile/user_6.jpg',
-      'time': 'June 05, 08:40 AM',
-      'type': 'voice',
-      'callStatus': 'receive'
-    },
-    {
-      'name': 'Marco',
-      'image': 'assets/user_profile/user_7.jpg',
-      'time': 'June 04, 09:35 AM',
-      'type': 'video',
-      'callStatus': 'dial'
-    },
-    {
-      'name': 'Steffan',
-      'image': 'assets/user_profile/user_8.jpg',
-      'time': 'June 04, 07:12 AM',
-      'type': 'voice',
-      'callStatus': 'missed'
-    }
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -169,8 +111,8 @@ class _CallsState extends State<Calls> {
                             padding: EdgeInsets.all(fixPadding),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(30.0),
-                              image: DecorationImage(
-                                image: AssetImage(item['image']!),
+                              image: const DecorationImage(
+                                image: AssetImage('assets/user.png'),
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -182,66 +124,66 @@ class _CallsState extends State<Calls> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                Text(
-                                  item['name']!,
-                                  style: nemeTextStyle,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
+                                // Text(
+                                //   item.receiver,
+                                //   style: nemeTextStyle,
+                                //   maxLines: 1,
+                                //   overflow: TextOverflow.ellipsis,
+                                // ),
                                 heightSpace,
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    (item['callStatus'] == 'dial')
-                                        ? const Icon(Icons.call_made,
-                                            color: Colors.blue, size: 16.0)
-                                        : (item['callStatus'] == 'received')
-                                            ? const Icon(Icons.call_received,
-                                                color: Colors.orange, size: 16.0)
-                                            : const Icon(Icons.call_missed,
-                                                color: Colors.red, size: 16.0),
-                                    widthSpace,
-                                    Text(item['time']!, style: msgTextStyle),
-                                  ],
-                                ),
+                                // Row(
+                                //   mainAxisAlignment: MainAxisAlignment.start,
+                                //   crossAxisAlignment: CrossAxisAlignment.center,
+                                //   children: [
+                                //     (item['callStatus'] == 'dial')
+                                //         ? const Icon(Icons.call_made,
+                                //             color: Colors.blue, size: 16.0)
+                                //         : (item['callStatus'] == 'received')
+                                //             ? const Icon(Icons.call_received,
+                                //                 color: Colors.orange, size: 16.0)
+                                //             : const Icon(Icons.call_missed,
+                                //                 color: Colors.red, size: 16.0),
+                                //     widthSpace,
+                                //     Text(item['time']!, style: msgTextStyle),
+                                //   ],
+                                // ),
                               ],
                             ),
                           ),
-                          IconButton(
-                            onPressed: () {
-                              if (item['type'] == 'voice') {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => PhoneCall(
-                                            name: item['name']!,
-                                            imagePath: item['image']!)));
-                              } else {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            VideoCall(name: item['name']!)));
-                              }
-                            },
-                            icon: Icon(
-                                (item['type'] == 'voice')
-                                    ? Icons.call
-                                    : Icons.videocam,
-                                color: primaryColor,
-                                size: 18.0),
-                          ),
+                          // IconButton(
+                          //   onPressed: () {
+                          //     if (item['type'] == 'voice') {
+                          //       Navigator.push(
+                          //           context,
+                          //           MaterialPageRoute(
+                          //               builder: (context) => PhoneCall(
+                          //                   name: item['name']!,
+                          //                   imagePath: item['image']!)));
+                          //     } else {
+                          //       Navigator.push(
+                          //           context,
+                          //           MaterialPageRoute(
+                          //               builder: (context) =>
+                          //                   VideoCall(name: item['name']!)));
+                          //     }
+                          //   },
+                          //   icon: Icon(
+                          //       (item['type'] == 'voice')
+                          //           ? Icons.call
+                          //           : Icons.videocam,
+                          //       color: primaryColor,
+                          //       size: 18.0),
+                          // ),
                         ],
                       ),
                     ),
-                    (index != (callList.length - 1))
-                        ? Container(
-                            width: width - (fixPadding * 2.0),
-                            height: 0.6,
-                            color: primaryColor.withOpacity(0.20),
-                          )
-                        : Container(),
+                    // (index != (callList.length - 1))
+                    //     ? Container(
+                    //         width: width - (fixPadding * 2.0),
+                    //         height: 0.6,
+                    //         color: primaryColor.withOpacity(0.20),
+                    //       )
+                    //     : Container(),
                   ],
                 ),
               );
